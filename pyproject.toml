@@ -1,0 +1,17 @@
+[tool.poetry]
+package-mode = false
+name = "2dmc-renewed"
+version = "0.1.0"
+description = "Full rewrite of 2DMC."
+authors = ["DaNubCoding"]
+license = "GPL-3.0"
+readme = "README"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pygame-ce = "^2.5.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
