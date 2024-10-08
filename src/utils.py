@@ -3,7 +3,6 @@ from pygame.math import Vector2
 from typing import Self
 from math import floor
 
-
 def read_file(path: str) -> str:
     """Opens a file, read the contents of the file, then closes it.
 
@@ -16,7 +15,6 @@ def read_file(path: str) -> str:
     with open(path, "r") as file:
         return file.read()
 
-
 def inttup(tup: tuple[float, float]) -> tuple:
     """Convert a tuple of 2 floats to a tuple of 2 ints.
 
@@ -27,7 +25,6 @@ def inttup(tup: tuple[float, float]) -> tuple:
         The integer tuple.
     """
     return (floor(tup[0]), floor(tup[1]))
-
 
 class Vec(Vector2, metaclass=multimeta):
     def normalize(self) -> Self:

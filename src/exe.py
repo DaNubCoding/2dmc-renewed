@@ -3,11 +3,9 @@ import sys
 import os
 
 BUNDLE_DIR = getattr(
-    sys,
-    '_MEIPASS',
+    sys, '_MEIPASS',
     Path(os.path.abspath(os.path.dirname(__file__))).parent
 )
-
 
 def pathof(file: str) -> str:
     """Gets the path to the given file that will work with exes.

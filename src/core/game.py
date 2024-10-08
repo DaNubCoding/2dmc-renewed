@@ -3,16 +3,13 @@ from src.core.scene import Scene
 from pygame.locals import QUIT
 import pygame
 
-
 class AbortScene(Exception):
     def __str__(self):
         return "Scene aborted but not caught with a try/except block."
 
-
 class AbortGame(Exception):
     def __str__(self):
         return "Game aborted but not caught with a try/except block."
-
 
 class Game:
     def __init__(self) -> None:

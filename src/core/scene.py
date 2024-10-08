@@ -8,7 +8,6 @@ from src.core.sprite_manager import SpriteManager
 from src.core.sprite import Sprite
 import pygame
 
-
 class Scene(AbstractClass):
     def __init__(self, game: Game) -> None:
         self.game = game
