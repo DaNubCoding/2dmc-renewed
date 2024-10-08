@@ -17,7 +17,7 @@ class Game:
         self.screen = pygame.display.set_mode((800, 600))
         self.clock = pygame.time.Clock()
 
-        self.dt = self.clock.tick(0) * 0.05
+        self.dt = self.clock.tick(0) / 1000
         self.scene = MainScene(self)
 
     def run(self) -> None:
@@ -36,7 +36,7 @@ class Game:
             fps = round(self.clock.get_fps())
             pygame.display.set_caption(f"2DMC Renewed | FPS: {fps}")
 
-            self.dt = self.clock.tick(0) * 0.05
+            self.dt = self.clock.tick(0) / 1000
 
         pygame.quit()
 
