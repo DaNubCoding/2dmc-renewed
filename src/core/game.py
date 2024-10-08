@@ -1,4 +1,4 @@
-from src.scenes.main_scene import MainScene
+from src.scenes.main_game import MainScene
 from src.core.scene import Scene
 from pygame.locals import QUIT
 import pygame
