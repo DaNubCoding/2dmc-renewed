@@ -12,10 +12,10 @@ class Camera(HeadlessSprite):
     def update(self, dt: float) -> None:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w]:
-            self.pos.y -= 200 * dt
+            self.pos.y -= 400 * dt
         if keys[pygame.K_s]:
-            self.pos.y += 200 * dt
+            self.pos.y += 400 * dt
         if keys[pygame.K_a]:
-            self.pos.x -= 200 * dt
+            self.pos.x -= 400 * dt
         if keys[pygame.K_d]:
-            self.pos.x += 200 * dt
+            self.pos.x += 400 * dt
