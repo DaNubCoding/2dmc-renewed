@@ -21,5 +21,5 @@ class MainScene(Scene):
         self.sprite_manager.update(dt)
 
     def draw(self, screen: pygame.Surface) -> None:
-        screen.fill((50, 50, 50))
+        screen.fill((120, 167, 255))
         self.sprite_manager.draw(screen)
