@@ -13,6 +13,7 @@ import pygame
 class HeadlessSprite(AbstractClass):
     def __init__(self, scene: Scene, layer: Layer) -> None:
         self.uuid = uuid4()
+        self.game = scene.game
         self.scene = scene
         self.layer = layer
         self.pos = Vec(0, 0)

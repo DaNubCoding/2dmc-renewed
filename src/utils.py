@@ -1,6 +1,6 @@
+from typing import Self, Iterable
 from multimethod import multimeta
 from pygame.math import Vector2
-from typing import Self
 from math import floor
 
 def read_file(path: str) -> str:
@@ -25,6 +25,19 @@ def inttup(tup: tuple[float, float]) -> tuple:
         The integer tuple.
     """
     return (floor(tup[0]), floor(tup[1]))
+
+def iter_square(size: int) -> Iterable[tuple[int, int]]:
+    """Iterate over the coordinates of a square.
+
+    Args:
+        size: The size of the square.
+
+    Yields:
+        The coordinates of the square.
+    """
+    for x in range(size):
+        for y in range(size):
+            yield Vec(x, y)
 
 class Vec(Vector2, metaclass=multimeta):
     def normalize(self) -> Self:

@@ -36,8 +36,8 @@ class RenderLayer:
 
 
 class Layer(Enum):
-    BACKGROUND = auto()
-    MIDDLEGROUND = auto()
+    BG = auto()
+    MG = auto()
     PLAYER = auto()
-    FOREGROUND = auto()
+    FG = auto()
     HUD = auto()

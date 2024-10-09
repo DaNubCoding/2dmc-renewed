@@ -4,18 +4,17 @@ if TYPE_CHECKING:
     from src.core.game import Game
 
 from src.sprites.camera import Camera
-from src.sprites.block import Block
+from src.core.chunk import Chunk
 from src.core.scene import Scene
 import pygame
 
 class MainScene(Scene):
     def __init__(self, game: Game) -> None:
         super().__init__(game)
-        self.camera = Camera(self)
+        self.camera = Camera(self) # 296 q1-8, 10, 11
         self.add(self.camera)
-        for x in range(100):
-            for y in range(100):
-                self.add(Block(self, (x * 32, y * 32)))
+
+        self.chunk = Chunk(self, (0, 0))
 
     def update(self, dt: float) -> None:
         self.sprite_manager.update(dt)

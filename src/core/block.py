@@ -1,13 +1,13 @@
-from src.core.sprite import CameraSprite
-from src.core.render_layer import Layer
 from src.core.scene import Scene
 from src.utils import Vec
 import pygame
 
-class Block(CameraSprite):
-    def __init__(self, scene: Scene, pos: Vec) -> None:
-        super().__init__(scene, Layer.MIDDLEGROUND)
+class Block:
+    def __init__(self, scene: Scene, pos: Vec, name: str) -> None:
+        self.scene = scene
         self.pos = Vec(pos)
+        self.name = name
+        self.image = scene.game.assets.blocks[name]
 
     def update(self, dt: float) -> None:
         pass

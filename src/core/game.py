@@ -1,4 +1,5 @@
 from src.scenes.main_game import MainScene
+from src.core.assets import Assets
 from src.core.scene import Scene
 from pygame.locals import QUIT
 import pygame
@@ -16,8 +17,9 @@ class Game:
         pygame.init()
         self.screen = pygame.display.set_mode((800, 600))
         self.clock = pygame.time.Clock()
-
         self.dt = self.clock.tick(0) / 1000
+
+        self.assets = Assets()
         self.scene = MainScene(self)
 
     def run(self) -> None:
