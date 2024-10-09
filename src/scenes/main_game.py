@@ -3,8 +3,8 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.core.game import Game
 
+from src.core.world.chunk import Chunk
 from src.sprites.camera import Camera
-from src.core.chunk import Chunk
 from src.core.scene import Scene
 import pygame
 

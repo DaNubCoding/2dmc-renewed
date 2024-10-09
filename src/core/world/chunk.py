@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from src.sprites.chunk_view import ChunkView
 from src.utils import Vec, iter_square
-from src.core.block import Block
+from src.core.world.block import Block
 from src.core.scene import Scene
 from enum import Enum, auto
 from src.constants import *

@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from src.core.chunk import Chunk, ChunkLayer
+    from core.world.chunk import Chunk, ChunkLayer
 
 from src.core.sprite import CameraSprite
 from src.core.render_layer import Layer
