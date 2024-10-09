@@ -16,6 +16,7 @@ class ChunkView(CameraSprite):
         self.chunk = chunk
         self.chunk_layer = chunk_layer
         self.blocks = chunk.blocks[chunk_layer]
+        self.pos = chunk.pos
         self.modified = True
 
         self.image = pygame.Surface(BLOCKCHUNKXY, pygame.SRCALPHA)

@@ -11,7 +11,7 @@ from random import uniform
 class Chunk:
     def __init__(self, scene: Scene, pos: Vec) -> None:
         self.scene = scene
-        self.pos = Vec(pos)
+        self.pos = Vec(pos) * BLOCKCHUNK
 
         self.bg_blocks: dict[Vec, Block] = {}
         self.mg_blocks: dict[Vec, Block] = {}
