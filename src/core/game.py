@@ -15,7 +15,7 @@ class AbortGame(Exception):
 class Game:
     def __init__(self) -> None:
         pygame.init()
-        self.screen = pygame.display.set_mode((800, 600))
+        self.screen = pygame.display.set_mode((1200, 800))
         self.clock = pygame.time.Clock()
         self.dt = self.clock.tick(0) / 1000
 
