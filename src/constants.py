@@ -1,5 +1,8 @@
 from src.utils import Vec
 
+WIDTH, HEIGHT = 1280, 720
+SIZE = Vec(WIDTH, HEIGHT)
+
 BLOCK = 64
 CHUNK = 8
 BLOCKCHUNK = BLOCK * CHUNK

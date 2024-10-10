@@ -2,6 +2,7 @@ from src.scenes.main_game import MainScene
 from src.core.assets import Assets
 from src.core.scene import Scene
 from pygame.locals import QUIT
+from src.constants import *
 import pygame
 
 class AbortScene(Exception):
@@ -15,7 +16,7 @@ class AbortGame(Exception):
 class Game:
     def __init__(self) -> None:
         pygame.init()
-        self.screen = pygame.display.set_mode((1200, 800))
+        self.screen = pygame.display.set_mode(SIZE)
         self.clock = pygame.time.Clock()
         self.dt = self.clock.tick(0) / 1000
 
