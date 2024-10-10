@@ -16,7 +16,7 @@ class ChunkView(CameraSprite):
         self.chunk = chunk
         self.chunk_layer = chunk_layer
         self.blocks = chunk.blocks[chunk_layer]
-        self.pos = chunk.pos
+        self.pos = chunk.pos * BLOCKCHUNK
         self.modified = True
 
         self.image = pygame.Surface(BLOCKCHUNKXY, pygame.SRCALPHA)
@@ -30,6 +30,7 @@ class ChunkView(CameraSprite):
                 if pos not in self.blocks: continue
                 block = self.blocks[pos]
                 self.image.blit(block.image, pos * BLOCK)
+            pygame.draw.rect(self.image, (0, 255, 0), (0, 0, *BLOCKCHUNKXY), 1)
             self.modified = False
 
         screen.blit(self.image, self.screen_pos)

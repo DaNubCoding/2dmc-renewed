@@ -11,7 +11,7 @@ from random import uniform
 class Chunk:
     def __init__(self, scene: Scene, pos: Vec) -> None:
         self.scene = scene
-        self.pos = Vec(pos) * BLOCKCHUNK
+        self.pos = Vec(pos)
 
         self.bg_blocks: dict[Vec, Block] = {}
         self.mg_blocks: dict[Vec, Block] = {}
@@ -34,6 +34,10 @@ class Chunk:
 
         for view in self.views.values():
             self.scene.add(view)
+
+    def unload(self) -> None:
+        for view in self.views.values():
+            self.scene.remove(view)
 
 class ChunkLayer(Enum):
     BG = auto()

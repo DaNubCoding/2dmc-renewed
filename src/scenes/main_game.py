@@ -3,8 +3,10 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.core.game import Game
 
-from src.core.world.chunk import Chunk
+from src.core.world.chunk_manager import ChunkManager
+from src.utils import Vec, iter_square
 from src.sprites.camera import Camera
+from src.core.world.chunk import Chunk
 from src.core.scene import Scene
 import pygame
 
@@ -14,7 +16,8 @@ class MainScene(Scene):
         self.camera = Camera(self) # 296 q1-8, 10, 11
         self.add(self.camera)
 
-        self.chunk = Chunk(self, (0, 0))
+        self.chunk_manager = ChunkManager(self)
+        self.chunk_manager.start()
 
     def update(self, dt: float) -> None:
         self.sprite_manager.update(dt)

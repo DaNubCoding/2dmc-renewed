@@ -26,6 +26,22 @@ def inttup(tup: tuple[float, float]) -> tuple:
     """
     return (floor(tup[0]), floor(tup[1]))
 
+def iter_rect(left: int, right: int, top: int, bottom: int) -> Iterable[tuple[int, int]]:
+    """Iterate over the coordinates of a rectangle.
+
+    Args:
+        left: The leftmost x-coordinate (inclusive).
+        right: The rightmost x-coordinate (inclusive).
+        top: The topmost y-coordinate (inclusive).
+        bottom: The bottommost y-coordinate (inclusive).
+
+    Yields:
+        The coordinates of the rectangle.
+    """
+    for x in range(int(left), int(right) + 1):
+        for y in range(int(top), int(bottom) + 1):
+            yield Vec(x, y)
+
 def iter_square(size: int) -> Iterable[tuple[int, int]]:
     """Iterate over the coordinates of a square.
 
@@ -35,11 +51,17 @@ def iter_square(size: int) -> Iterable[tuple[int, int]]:
     Yields:
         The coordinates of the square.
     """
-    for x in range(size):
-        for y in range(size):
-            yield Vec(x, y)
+    yield from iter_rect(0, size - 1, 0, size - 1)
 
 class Vec(Vector2, metaclass=multimeta):
+    @property
+    def itup(self) -> tuple[int, int]:
+        return inttup(self)
+
+    @property
+    def ivec(self) -> Self:
+        return Vec(self.itup)
+
     def normalize(self) -> Self:
         try:
             return super().normalize()
