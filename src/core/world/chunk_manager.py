@@ -77,16 +77,16 @@ class ChunkManager:
             # Save at most once every AUTOSAVE_INTERVAL seconds
             pygame.time.wait(AUTOSAVE_INTERVAL * 1000)
 
-            self.save_regions()
-
-            self.region_data.clear()
+            print("Autosaving regions...")
+            with self.region_data_lock:
+                self.save_regions()
+                self.region_data.clear()
 
     def save_regions(self) -> None:
-        with self.region_data_lock:
-            for region, data in self.region_data.items():
-                file = open(f"{self.regions_dir}/{region.iconcise}.json", "w")
-                json.dump(data, file, indent=2)
-                file.close()
+        for region, data in self.region_data.items():
+            file = open(f"{self.regions_dir}/{region.iconcise}.json", "w")
+            json.dump(data, file, indent=2)
+            file.close()
 
         print(f"Saved {len(self.region_data)} regions")
 

@@ -54,13 +54,7 @@ class Chunk:
         for view in self.views.values():
             self.scene.add(view)
 
-        # Create a region data entry if it doesn't exist
-        if self.region not in self.manager.region_data:
-            with self.manager.region_data_lock:
-                self.manager.region_data[self.region] = {}
-            print("Entering new region:", self.region)
-        # Save data to the manager's region data to be saved to disk later
-        self.manager.region_data[self.region][self.pos.iconcise] = {
+        data = {
             "blocks": {
                 layer.name.lower(): {
                     pos.iconcise: block.data
@@ -69,6 +63,13 @@ class Chunk:
                 for layer, blocks in self.blocks.items()
             }
         }
+        with self.manager.region_data_lock:
+            # Create a region data entry if it doesn't exist
+            if self.region not in self.manager.region_data:
+                self.manager.region_data[self.region] = {}
+                print("Entering new region:", self.region)
+            # Save data to the manager's region data to be saved to disk later
+            self.manager.region_data[self.region][self.pos.iconcise] = data
 
     def try_load(self) -> bool:
         # Load region data from disk if it doesn't exist in memory
