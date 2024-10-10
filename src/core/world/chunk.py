@@ -56,7 +56,8 @@ class Chunk:
 
         # Create a region data entry if it doesn't exist
         if self.region not in self.manager.region_data:
-            self.manager.region_data[self.region] = {}
+            with self.manager.region_data_lock:
+                self.manager.region_data[self.region] = {}
             print("Entering new region:", self.region)
         # Save data to the manager's region data to be saved to disk later
         self.manager.region_data[self.region][self.pos.iconcise] = {
@@ -76,7 +77,8 @@ class Chunk:
             # If region data doesn't exist on disk, return False for generation
             if region_data is None: return False
             # Otherwise, load region data into memory
-            self.manager.region_data[self.region] = region_data
+            with self.manager.region_data_lock:
+                self.manager.region_data[self.region] = region_data
 
         # Load data from region data if it exists
         region_data = self.manager.region_data[self.region]

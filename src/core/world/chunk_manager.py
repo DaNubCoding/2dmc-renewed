@@ -1,7 +1,7 @@
 from src.core.world.chunk import Chunk
+from threading import Thread, Lock
 from src.core.scene import Scene
 from src.utils import iter_rect
-from threading import Thread
 from src.constants import *
 import pygame
 import json
@@ -28,6 +28,8 @@ class ChunkManager:
             os.makedirs(self.regions_dir)
         # Data that will be saved directly to disk
         self.region_data: dict[Vec, dict] = {}
+        # Lock to prevent chunk loading and saving from conflicting
+        self.region_data_lock = Lock()
 
     def start(self) -> None:
         Thread(target=self.queue_chunks, daemon=True).start()
@@ -80,10 +82,11 @@ class ChunkManager:
             self.region_data.clear()
 
     def save_regions(self) -> None:
-        for region, data in self.region_data.items():
-            file = open(f"{self.regions_dir}/{region.iconcise}.json", "w")
-            json.dump(data, file, indent=2)
-            file.close()
+        with self.region_data_lock:
+            for region, data in self.region_data.items():
+                file = open(f"{self.regions_dir}/{region.iconcise}.json", "w")
+                json.dump(data, file, indent=2)
+                file.close()
 
         print(f"Saved {len(self.region_data)} regions")
 
