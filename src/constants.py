@@ -1,6 +1,6 @@
 from src.utils import Vec
 
-WIDTH, HEIGHT = 1280, 720
+WIDTH, HEIGHT = 1280, 768
 SIZE = Vec(WIDTH, HEIGHT)
 
 BLOCK = 64
