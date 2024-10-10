@@ -1,6 +1,7 @@
 from typing import Self, Iterable
 from multimethod import multimeta
 from pygame.math import Vector2
+from numbers import Number
 from math import floor
 
 def read_file(path: str) -> str:
@@ -15,8 +16,8 @@ def read_file(path: str) -> str:
     with open(path, "r") as file:
         return file.read()
 
-def inttup(tup: tuple[float, float]) -> tuple:
-    """Convert a tuple of 2 floats to a tuple of 2 ints.
+def inttup(tup: tuple[Number, Number]) -> tuple:
+    """Convert a tuple of 2 numbers to a tuple of 2 ints.
 
     Args:
         tup: The tuple to convert.
@@ -74,25 +75,25 @@ class Vec(Vector2, metaclass=multimeta):
         except ValueError:
             pass
 
-    def clamp_magnitude(self, max_length: float) -> Self:
+    def clamp_magnitude(self, max_length: Number) -> Self:
         try:
             return super().clamp_magnitude(max_length)
         except ValueError:
             return Vec(0, 0)
 
-    def clamp_magnitude(self, min_length: float, max_length: float) -> Self:
+    def clamp_magnitude(self, min_length: Number, max_length: Number) -> Self:
         try:
             return super().clamp_magnitude(min_length, max_length)
         except ValueError:
             return Vec(0, 0)
 
-    def clamp_magnitude_ip(self, max_length: float) -> None:
+    def clamp_magnitude_ip(self, max_length: Number) -> None:
         try:
             return super().clamp_magnitude_ip(max_length)
         except ValueError:
             pass
 
-    def clamp_magnitude_ip(self, min_length: float, max_length: float) -> None:
+    def clamp_magnitude_ip(self, min_length: Number, max_length: Number) -> None:
         try:
             return super().clamp_magnitude_ip(min_length, max_length)
         except ValueError:
