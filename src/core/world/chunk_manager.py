@@ -60,8 +60,8 @@ class ChunkManager:
 
     def get_new_chunk_positions(self) -> None:
         center = (self.scene.camera.pos + SIZE // 2) // BLOCKCHUNK
-        left = center.x - WIDTH // BLOCKCHUNK // 2 - 1
-        right = center.x + WIDTH // BLOCKCHUNK // 2 + 1
-        top = center.y - HEIGHT // BLOCKCHUNK // 2 - 1
-        bottom = center.y + HEIGHT // BLOCKCHUNK // 2 + 1
+        left = center.x - WIDTH // BLOCKCHUNK // 2 - 2
+        right = center.x + WIDTH // BLOCKCHUNK // 2 + 2
+        top = center.y - HEIGHT // BLOCKCHUNK // 2 - 2
+        bottom = center.y + HEIGHT // BLOCKCHUNK // 2 + 2
         return {pos for pos in iter_rect(left, right, top, bottom)}
