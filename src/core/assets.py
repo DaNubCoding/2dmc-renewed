@@ -11,5 +11,5 @@ class Assets:
         self.blocks = {name: self.block_img(name) for name in self.block_names}
 
     def block_img(self, name: str) -> pygame.Surface:
-        image = pygame.image.load(f"assets/images/{name}.png")
+        image = pygame.image.load(f"res/assets/images/{name}.png")
         return pygame.transform.scale(image, BLOCKXY)

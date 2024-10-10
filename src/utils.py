@@ -63,6 +63,20 @@ class Vec(Vector2, metaclass=multimeta):
     def ivec(self) -> Self:
         return Vec(self.itup)
 
+    @property
+    def concise(self) -> str:
+        return f"{self.x},{self.y}"
+
+    @property
+    def iconcise(self) -> str:
+        itup = self.itup
+        return f"{itup[0]},{itup[1]}"
+
+    @staticmethod
+    def from_concise(concise: str) -> Self:
+        x, y = concise.split(",")
+        return Vec(float(x), float(y))
+
     def normalize(self) -> Self:
         try:
             return super().normalize()

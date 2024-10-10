@@ -4,19 +4,19 @@ if TYPE_CHECKING:
     from src.core.game import Game
 
 from src.core.world.chunk_manager import ChunkManager
-from src.utils import Vec, iter_square
+from src.core.world.block_manager import BlockManager
 from src.sprites.camera import Camera
-from src.core.world.chunk import Chunk
 from src.core.scene import Scene
 import pygame
 
 class MainScene(Scene):
-    def __init__(self, game: Game) -> None:
+    def __init__(self, game: Game, world_name: str) -> None:
         super().__init__(game)
-        self.camera = Camera(self) # 296 q1-8, 10, 11
+        self.camera = Camera(self)
         self.add(self.camera)
 
-        self.chunk_manager = ChunkManager(self)
+        self.block_manager = BlockManager()
+        self.chunk_manager = ChunkManager(self, world_name)
         self.chunk_manager.start()
 
     def update(self, dt: float) -> None:
@@ -25,3 +25,6 @@ class MainScene(Scene):
     def draw(self, screen: pygame.Surface) -> None:
         screen.fill((120, 167, 255))
         self.sprite_manager.draw(screen)
+
+    def quit(self) -> None:
+        self.chunk_manager.quit()

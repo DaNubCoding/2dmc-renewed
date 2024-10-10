@@ -21,6 +21,9 @@ class Scene(AbstractClass):
     def draw(self, screen: pygame.Surface) -> None:
         pass
 
+    def quit(self) -> None:
+        pass
+
     def add(self, sprite: Sprite) -> None:
         self.sprite_manager.add(sprite)
 

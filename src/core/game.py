@@ -15,13 +15,16 @@ class AbortGame(Exception):
 
 class Game:
     def __init__(self) -> None:
+        # NOTE: temporary world name input
+        world_name = input("World Name: ")
+
         pygame.init()
         self.screen = pygame.display.set_mode(SIZE)
         self.clock = pygame.time.Clock()
         self.dt = self.clock.tick(0) / 1000
 
         self.assets = Assets()
-        self.scene = MainScene(self)
+        self.scene = MainScene(self, world_name)
 
     def run(self) -> None:
         while True:
@@ -31,6 +34,7 @@ class Game:
             except AbortScene:
                 continue
             except AbortGame:
+                self.scene.quit()
                 break
 
             self.scene.draw(self.screen)

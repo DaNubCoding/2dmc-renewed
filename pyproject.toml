@@ -11,6 +11,7 @@ readme = "README"
 python = "^3.12"
 pygame-ce = "^2.5.1"
 multimethod = "^1.12"
+bidict = "^0.23.1"
 
 
 [build-system]

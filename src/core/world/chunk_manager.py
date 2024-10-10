@@ -4,9 +4,11 @@ from src.utils import iter_rect
 from threading import Thread
 from src.constants import *
 import pygame
+import json
+import os
 
 class ChunkManager:
-    def __init__(self, scene: Scene) -> None:
+    def __init__(self, scene: Scene, world_name: str) -> None:
         self.scene = scene
         # The set of chunk positions that have been calculated to be in view
         self.in_view_positions: set[Vec] = set()
@@ -18,9 +20,19 @@ class ChunkManager:
         self.load_clock = pygame.time.Clock()
         self.prev_center = None
 
+        self.world_name = world_name
+        self.world_dir = f"user_data/saves/{self.world_name}"
+        self.regions_dir = f"{self.world_dir}/regions"
+        # Create the regions directory (and parents) if it doesn't exist yet
+        if not os.path.exists(self.regions_dir):
+            os.makedirs(self.regions_dir)
+        # Data that will be saved directly to disk
+        self.region_data: dict[Vec, dict] = {}
+
     def start(self) -> None:
         Thread(target=self.queue_chunks, daemon=True).start()
         Thread(target=self.load_chunks, daemon=True).start()
+        Thread(target=self.autosave_regions, daemon=True).start()
 
     def queue_chunks(self) -> None:
         while True:
@@ -58,6 +70,23 @@ class ChunkManager:
             chunk = Chunk(self.scene, chunk_pos)
             self.loaded_chunks[chunk_pos] = chunk
 
+    def autosave_regions(self) -> None:
+        while True:
+            # Save at most once every AUTOSAVE_INTERVAL seconds
+            pygame.time.wait(AUTOSAVE_INTERVAL * 1000)
+
+            self.save_regions()
+
+            self.region_data.clear()
+
+    def save_regions(self) -> None:
+        for region, data in self.region_data.items():
+            file = open(f"{self.regions_dir}/{region.iconcise}.json", "w")
+            json.dump(data, file, indent=2)
+            file.close()
+
+        print(f"Saved {len(self.region_data)} regions")
+
     def get_new_chunk_positions(self) -> None:
         center = (self.scene.camera.pos + SIZE // 2) // BLOCKCHUNK
         left = center.x - WIDTH // BLOCKCHUNK // 2 - 2
@@ -65,3 +94,6 @@ class ChunkManager:
         top = center.y - HEIGHT // BLOCKCHUNK // 2 - 2
         bottom = center.y + HEIGHT // BLOCKCHUNK // 2 + 2
         return {pos for pos in iter_rect(left, right, top, bottom)}
+
+    def quit(self) -> None:
+        self.save_regions()
