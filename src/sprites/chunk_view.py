@@ -13,7 +13,6 @@ import pygame
 class ChunkView(CameraSprite):
     def __init__(self, scene: Scene, chunk: Chunk, chunk_layer: ChunkLayer) -> None:
         super().__init__(scene, Layer[chunk_layer.name])
-        self.chunk = chunk
         self.chunk_layer = chunk_layer
         self.blocks = chunk.blocks[chunk_layer]
         self.pos = chunk.pos * BLOCKCHUNK
