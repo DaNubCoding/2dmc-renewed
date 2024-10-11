@@ -17,6 +17,9 @@ class ChunkView(CameraSprite):
         self.chunk_layer = chunk_layer
         self.blocks = chunk.blocks[chunk_layer]
         self.pos = chunk.pos * BLOCKCHUNK
+        # Update screen position in init so that the chunk view doesn't get
+        # drawn at the wrong location for one frame
+        self.screen_pos = self.pos - self.scene.camera.pos
         self.modified = True
 
         self.image = pygame.Surface(BLOCKCHUNKXY, pygame.SRCALPHA)
