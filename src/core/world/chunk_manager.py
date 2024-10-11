@@ -90,7 +90,7 @@ class ChunkManager:
 
         print(f"Saved {len(self.region_data)} regions")
 
-    def get_new_chunk_positions(self) -> None:
+    def get_new_chunk_positions(self) -> set[Vec]:
         center = (self.scene.camera.pos + SIZE // 2) // BLOCKCHUNK
         left = center.x - WIDTH // BLOCKCHUNK // 2 - 2
         right = center.x + WIDTH // BLOCKCHUNK // 2 + 2
