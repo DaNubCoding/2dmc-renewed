@@ -2,8 +2,28 @@ from typing import Self as _Self, Any as _Any, Iterable as _Iterable
 from multimethod import multimeta as _multimeta
 from pygame.math import Vector2 as _Vector2
 from numbers import Number as _Number
+from pathlib import Path as _Path
 from math import floor as _floor
 import weakref as _weakref
+import sys as _sys
+import os as _os
+
+_BUNDLE_DIR = getattr(
+    _sys, '_MEIPASS',
+    _Path(_os.path.abspath(_os.path.dirname(__file__))).parent
+)
+def pathof(file: str) -> str:
+    """Gets the path to the given file that will work with exes.
+    Args:
+        file (str): The original path to go to
+    Returns:
+        str: The bundled - exe compatible file path
+    """
+
+    abspath = _os.path.abspath(_os.path.join(_BUNDLE_DIR, file))
+    if not _os.path.exists(abspath):
+        abspath = file
+    return abspath
 
 def ref_proxy(obj: _Any) -> _Any:
     """Create a weak reference proxy to an object if it isn't already one.
