@@ -5,7 +5,7 @@ version = "0.1.0"
 description = "Full rewrite of 2DMC."
 authors = ["DaNubCoding"]
 license = "GPL-3.0"
-readme = "README"
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
