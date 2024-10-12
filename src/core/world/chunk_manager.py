@@ -1,15 +1,15 @@
 from src.core.world.chunk import Chunk
 from threading import Thread, Lock
 from src.core.scene import Scene
-from src.utils import iter_rect
 from src.constants import *
+from src.utils import *
 import pygame
 import json
 import os
 
 class ChunkManager:
     def __init__(self, scene: Scene, world_name: str) -> None:
-        self.scene = scene
+        self.scene = ref_proxy(scene)
         # The set of chunk positions that have been calculated to be in view
         self.in_view_positions: set[Vec] = set()
         # The set of chunk positions that are in view but have yet to be loaded

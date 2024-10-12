@@ -1,8 +1,22 @@
-from typing import Self, Iterable
-from multimethod import multimeta
-from pygame.math import Vector2
-from numbers import Number
-from math import floor
+from typing import Self as _Self, Any as _Any, Iterable as _Iterable
+from multimethod import multimeta as _multimeta
+from pygame.math import Vector2 as _Vector2
+from numbers import Number as _Number
+from math import floor as _floor
+import weakref as _weakref
+
+def ref_proxy(obj: _Any) -> _Any:
+    """Create a weak reference proxy to an object if it isn't already one.
+
+    Args:
+        obj: The object to create a weak reference proxy to.
+
+    Returns:
+        The weak reference proxy.
+    """
+    if isinstance(obj, _weakref.ProxyTypes):
+        return obj
+    return _weakref.proxy(obj)
 
 def read_file(path: str) -> str:
     """Opens a file, read the contents of the file, then closes it.
@@ -16,8 +30,8 @@ def read_file(path: str) -> str:
     with open(path, "r") as file:
         return file.read()
 
-def inttup(tup: tuple[Number, Number]) -> tuple:
-    """Convert a tuple of 2 numbers to a tuple of 2 ints.
+def inttup(tup: tuple[_Number, _Number]) -> tuple:
+    """Convert a tuple of 2 _numbers to a tuple of 2 ints.
 
     Args:
         tup: The tuple to convert.
@@ -25,9 +39,9 @@ def inttup(tup: tuple[Number, Number]) -> tuple:
     Returns:
         The integer tuple.
     """
-    return (floor(tup[0]), floor(tup[1]))
+    return (_floor(tup[0]), _floor(tup[1]))
 
-def iter_rect(left: int, right: int, top: int, bottom: int) -> Iterable[tuple[int, int]]:
+def iter_rect(left: int, right: int, top: int, bottom: int) -> _Iterable[tuple[int, int]]:
     """Iterate over the coordinates of a rectangle.
 
     Args:
@@ -43,7 +57,7 @@ def iter_rect(left: int, right: int, top: int, bottom: int) -> Iterable[tuple[in
         for y in range(int(top), int(bottom) + 1):
             yield Vec(x, y)
 
-def iter_square(size: int) -> Iterable[tuple[int, int]]:
+def iter_square(size: int) -> _Iterable[tuple[int, int]]:
     """Iterate over the coordinates of a square.
 
     Args:
@@ -54,13 +68,13 @@ def iter_square(size: int) -> Iterable[tuple[int, int]]:
     """
     yield from iter_rect(0, size - 1, 0, size - 1)
 
-class Vec(Vector2, metaclass=multimeta):
+class Vec(_Vector2, metaclass=_multimeta):
     @property
     def itup(self) -> tuple[int, int]:
         return inttup(self)
 
     @property
-    def ivec(self) -> Self:
+    def ivec(self) -> _Self:
         return Vec(self.itup)
 
     @property
@@ -73,11 +87,11 @@ class Vec(Vector2, metaclass=multimeta):
         return f"{itup[0]},{itup[1]}"
 
     @staticmethod
-    def from_concise(concise: str) -> Self:
+    def from_concise(concise: str) -> _Self:
         x, y = concise.split(",")
         return Vec(float(x), float(y))
 
-    def normalize(self) -> Self:
+    def normalize(self) -> _Self:
         try:
             return super().normalize()
         except ValueError:
@@ -89,25 +103,25 @@ class Vec(Vector2, metaclass=multimeta):
         except ValueError:
             pass
 
-    def clamp_magnitude(self, max_length: Number) -> Self:
+    def clamp_magnitude(self, max_length: _Number) -> _Self:
         try:
             return super().clamp_magnitude(max_length)
         except ValueError:
             return Vec(0, 0)
 
-    def clamp_magnitude(self, min_length: Number, max_length: Number) -> Self:
+    def clamp_magnitude(self, min_length: _Number, max_length: _Number) -> _Self:
         try:
             return super().clamp_magnitude(min_length, max_length)
         except ValueError:
             return Vec(0, 0)
 
-    def clamp_magnitude_ip(self, max_length: Number) -> None:
+    def clamp_magnitude_ip(self, max_length: _Number) -> None:
         try:
             return super().clamp_magnitude_ip(max_length)
         except ValueError:
             pass
 
-    def clamp_magnitude_ip(self, min_length: Number, max_length: Number) -> None:
+    def clamp_magnitude_ip(self, min_length: _Number, max_length: _Number) -> None:
         try:
             return super().clamp_magnitude_ip(min_length, max_length)
         except ValueError:

@@ -4,20 +4,20 @@ if TYPE_CHECKING:
     from src.core.world.chunk_manager import ChunkManager
 
 from src.sprites.chunk_view import ChunkView
-from src.utils import Vec, iter_square
 from src.core.world.block import Block
 from src.core.scene import Scene
 from enum import Enum, auto
 from typing import Optional
 from src.constants import *
 from random import uniform
+from src.utils import *
 import json
 import os
 
 class Chunk:
     def __init__(self, scene: Scene, pos: Vec) -> None:
-        self.scene = scene
-        self.manager: ChunkManager = scene.chunk_manager
+        self.scene = ref_proxy(scene)
+        self.manager: ChunkManager = ref_proxy(scene.chunk_manager)
 
         self.pos = Vec(pos)
         self.region = self.pos // REGION

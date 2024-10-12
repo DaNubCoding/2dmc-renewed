@@ -5,8 +5,7 @@ if TYPE_CHECKING:
     from src.core.scene import Scene
 
 from abc import ABC as AbstractClass, abstractmethod
-from src.utils import Vec
-from typing import Self
+from src.utils import *
 from uuid import uuid4
 import pygame
 
@@ -14,7 +13,7 @@ class HeadlessSprite(AbstractClass):
     def __init__(self, scene: Scene, layer: Layer) -> None:
         self.uuid = uuid4()
         self.game = scene.game
-        self.scene = scene
+        self.scene = ref_proxy(scene)
         self.layer = layer
         self.pos = Vec(0, 0)
 
