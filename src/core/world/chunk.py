@@ -9,8 +9,8 @@ from src.core.scene import Scene
 from enum import Enum, auto
 from typing import Optional
 from src.constants import *
-from random import uniform
 from src.utils import *
+from math import floor
 import json
 import os
 
@@ -18,6 +18,8 @@ class Chunk:
     def __init__(self, scene: Scene, pos: Vec) -> None:
         self.scene = ref_proxy(scene)
         self.manager: ChunkManager = ref_proxy(scene.chunk_manager)
+        self.seed = self.manager.seed
+        self.noise = self.manager.noise
 
         self.pos = Vec(pos)
         self.region = self.pos // REGION
@@ -108,12 +110,18 @@ class Chunk:
             return json.load(file)
 
     def generate(self) -> None:
-        # NOTE: TEMPORARY FILL
-        # Otherwise, generate a new chunk with random blocks
-        for x, y in iter_square(CHUNK):
-            if uniform(0, 1) < 0.25: continue
-            block = Block(self.scene, self.pos + Vec(x, y), "dirt")
-            self.mg_blocks[Vec(x, y)] = block
+        for pos in iter_square(CHUNK):
+            world_pos = self.pos * CHUNK + pos
+            terrain_height = floor(self.noise([world_pos.x / 250]) * 25)
+            if world_pos.y > terrain_height + 4:
+                block = Block(self.scene, world_pos, "stone")
+                self.bg_blocks[pos] = block
+            elif world_pos.y > terrain_height:
+                block = Block(self.scene, world_pos, "dirt")
+                self.mg_blocks[pos] = block
+            elif world_pos.y == terrain_height:
+                block = Block(self.scene, world_pos, "grass_block")
+                self.mg_blocks[pos] = block
 
     def unload(self) -> None:
         for view in self.views.values():

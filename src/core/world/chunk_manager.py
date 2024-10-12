@@ -1,4 +1,5 @@
 from src.core.world.chunk import Chunk
+from perlin_noise import PerlinNoise
 from threading import Thread, Lock
 from src.core.scene import Scene
 from src.constants import *
@@ -30,6 +31,9 @@ class ChunkManager:
         self.region_data: dict[Vec, dict] = {}
         # Lock to prevent chunk loading and saving from conflicting
         self.region_data_lock = Lock()
+
+        self.seed = 0
+        self.noise = PerlinNoise(octaves=4, seed=self.seed)
 
     def start(self) -> None:
         Thread(target=self.queue_chunks, daemon=True).start()

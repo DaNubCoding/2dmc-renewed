@@ -23,6 +23,17 @@ files = [
 ]
 
 [[package]]
+name = "perlin-noise"
+version = "1.13"
+description = "Python implementation for Perlin Noise with unlimited coordinates space"
+optional = false
+python-versions = "*"
+files = [
+    {file = "perlin_noise-1.13-py3-none-any.whl", hash = "sha256:09f274c8da38f5a2a48b1626032a1b7738990df758a3bc7549ff3464869c6ca4"},
+    {file = "perlin_noise-1.13.tar.gz", hash = "sha256:0e0f074743336fbe9cf2cdbdeb74c75d43780a8b3cbc3415859cd396ab4da177"},
+]
+
+[[package]]
 name = "pygame-ce"
 version = "2.5.1"
 description = "Python Game Development"
@@ -95,4 +106,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "40b842a56456ca94af5746d13e39bf18e42f800cb00c85a6e4f8edcaff738ea3"
+content-hash = "4d5031407724eef9663b860a2ddd7cdf0fc6396e5f0fb4b840f3f5b175a37b75"
