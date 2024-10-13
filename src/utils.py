@@ -4,6 +4,7 @@ from pygame.math import Vector2 as _Vector2
 from numbers import Number as _Number
 from pathlib import Path as _Path
 from math import floor as _floor
+from time import time as _time
 import weakref as _weakref
 import sys as _sys
 import os as _os
@@ -265,3 +266,87 @@ class Vec(_Vector2, metaclass=_multimeta):
     def __hash__(self) -> int:
         """Return the hash of the vector."""
         return tuple(self).__hash__()
+
+class Timer:
+    def __init__(self, duration: float) -> None:
+        self.duration = duration
+        self.time = _time()
+        self.paused = False
+
+    @property
+    def elapsed(self) -> float:
+        return _time() - self.time
+
+    @property
+    def remaining(self) -> float:
+        return self.duration - self.elapsed
+
+    @property
+    def progress(self) -> float:
+        return self.elapsed / self.duration
+
+    @property
+    def progress_remaining(self) -> float:
+        return self.remaining / self.duration
+
+    @property
+    def done(self) -> bool:
+        return self.elapsed >= self.duration
+
+    def reset(self, duration: float = None) -> None:
+        if duration is not None:
+            self.duration = duration
+        self.time = _time()
+
+    def pause(self) -> None:
+        self.duration -= self.elapsed
+        self.paused = True
+
+    def resume(self) -> None:
+        self.time = _time()
+        self.paused = False
+
+    def toggle(self) -> None:
+        if self.paused:
+            self.resume()
+        else:
+            self.pause()
+
+    def __repr__(self) -> str:
+        return f"Timer({self.duration})"
+
+    def __str__(self) -> str:
+        return f"Timer({self.duration})"
+
+    def __bool__(self) -> bool:
+        return not self.done
+
+class LoopTimer(Timer):
+    def __init__(self, duration: float, max_loops: int = -1) -> None:
+        super().__init__(duration)
+        self.max_loops = max_loops
+        self.loops = 0
+
+    @property
+    def done(self) -> bool:
+        if not super().done: return False
+
+        self.loops += 1
+        # If the timer is done, reset it only if it hasn't reached the max
+        # number of loops yet.
+        if self.max_loops == -1 or self.loops < self.max_loops:
+            self.reset()
+
+        # For one frame, the timer is done, but it will be reset in the next
+        # frame if it hasn't reached the max number of loops yet.
+        return True
+
+    def reset(self, duration: float = None) -> None:
+        super().reset(duration)
+        self.loops = 0
+
+    def __repr__(self) -> str:
+        return f"LoopTimer({self.duration}, {self.max_loops})"
+
+    def __str__(self) -> str:
+        return f"LoopTimer({self.duration}, {self.max_loops})"
