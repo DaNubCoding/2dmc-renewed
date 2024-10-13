@@ -19,7 +19,7 @@ class DebugMenu(Sprite):
 
     def update(self, dt: float) -> None:
         if not self.visible: return
-        if time.time() - self.update_time < 0.5: return
+        if time.time() - self.update_time < 0.05: return
         self.update_time = time.time()
         self.data["FPS"] = int(self.game.clock.get_fps())
         self.data["Loaded Chunks"] = len(self.scene.chunk_manager.loaded_chunks)
