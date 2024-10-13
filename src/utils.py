@@ -291,7 +291,7 @@ class Timer:
 
     @property
     def done(self) -> bool:
-        return self.elapsed >= self.duration
+        return self.elapsed >= self.duration and not self.paused
 
     def reset(self, duration: float = None) -> None:
         if duration is not None:
@@ -329,6 +329,7 @@ class LoopTimer(Timer):
 
     @property
     def done(self) -> bool:
+        if self.paused: return False
         if not super().done: return False
 
         self.loops += 1
