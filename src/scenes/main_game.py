@@ -5,6 +5,7 @@ if TYPE_CHECKING:
 
 from src.core.world.chunk_manager import ChunkManager
 from src.core.world.block_manager import BlockManager
+from src.sprites.debug_menu import DebugMenu
 from src.sprites.camera import Camera
 from src.core.scene import Scene
 import pygame
@@ -19,7 +20,15 @@ class MainScene(Scene):
         self.chunk_manager = ChunkManager(self, world_name)
         self.chunk_manager.start()
 
+        self.debug_menu = DebugMenu(self)
+        self.add(self.debug_menu)
+
     def update(self, dt: float) -> None:
+        if pygame.KEYDOWN in self.game.events:
+            key = self.game.events[pygame.KEYDOWN].key
+            if key == pygame.K_F3:
+                self.debug_menu.toggle()
+
         self.sprite_manager.update(dt)
 
     def draw(self, screen: pygame.Surface) -> None:
