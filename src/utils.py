@@ -350,3 +350,42 @@ class LoopTimer(Timer):
 
     def __str__(self) -> str:
         return f"LoopTimer({self.duration}, {self.max_loops})"
+
+class PreciseLoopTimer(LoopTimer):
+    def __init__(self, duration: float, max_loops: int = -1) -> None:
+        super().__init__(duration, max_loops)
+        self.subframe_loops = 0
+
+    @property
+    def done(self) -> bool:
+        if self.paused: return False
+
+        # The number of loops that have elapsed since the last frame.
+        self.subframe_loops = int(self.elapsed // self.duration)
+        # If the timer is infinite, the number of loops is the number of loops
+        # that have elapsed since the last frame, nothing needs to be done.
+        if self.max_loops != -1:
+            # If the timer is finite, the number of loops may cause the total
+            # number of loops to exceed the maximum number of loops allowed,
+            # so the number of loops is clamped to the maximum number of loops
+            # allowed.
+            self.subframe_loops = min(
+                self.subframe_loops,
+                self.max_loops - self.loops
+            )
+
+        self.loops += self.subframe_loops
+        # Advance the start time by the number of loops that have elapsed since
+        # the last frame times the duration of the timer, so that the timer
+        # starts from the correct time in the next frame. This needs to be done
+        # instead of just resetting the timer, because the last loop of the
+        # timer within the frame may not have finished yet.
+        self.time += self.subframe_loops * self.duration
+
+        return self.subframe_loops > 0
+
+    def __repr__(self) -> str:
+        return f"PreciseLoopTimer({self.duration})"
+
+    def __str__(self) -> str:
+        return f"PreciseLoopTimer({self.duration})"
