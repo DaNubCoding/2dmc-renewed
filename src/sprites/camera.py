@@ -1,7 +1,7 @@
 from src.core.sprite import HeadlessSprite, Sprite
 from src.core.render_layer import Layer
 from src.core.scene import Scene
-from src.utils import *
+from src.util import *
 import pygame
 
 class Camera(HeadlessSprite):

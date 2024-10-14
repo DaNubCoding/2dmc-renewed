@@ -7,7 +7,7 @@ from src.core.sprite import CameraSprite
 from src.core.render_layer import Layer
 from src.core.scene import Scene
 from src.constants import *
-from src.utils import *
+from src.util import *
 import pygame
 
 class ChunkView(CameraSprite):

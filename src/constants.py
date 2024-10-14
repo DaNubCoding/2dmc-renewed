@@ -1,4 +1,4 @@
-from src.utils import Vec as _Vec
+from src.util import Vec as _Vec
 
 WIDTH, HEIGHT = 1280, 768 # pixels
 SIZE = _Vec(WIDTH, HEIGHT) # pixels

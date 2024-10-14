@@ -9,7 +9,7 @@ from src.core.scene import Scene
 from enum import Enum, auto
 from typing import Optional
 from src.constants import *
-from src.utils import *
+from src.util import *
 from math import floor
 import json
 import os

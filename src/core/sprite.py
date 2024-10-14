@@ -5,7 +5,7 @@ if TYPE_CHECKING:
     from src.core.scene import Scene
 
 from abc import ABC as AbstractClass, abstractmethod
-from src.utils import *
+from src.util import *
 from uuid import uuid4
 import pygame
 

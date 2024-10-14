@@ -1,5 +1,5 @@
 from src.core.scene import Scene
-from src.utils import *
+from src.util import *
 import pygame
 
 class Block:

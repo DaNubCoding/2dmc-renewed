@@ -3,7 +3,7 @@ from perlin_noise import PerlinNoise
 from threading import Thread, Lock
 from src.core.scene import Scene
 from src.constants import *
-from src.utils import *
+from src.util import *
 import pygame
 import json
 import os
