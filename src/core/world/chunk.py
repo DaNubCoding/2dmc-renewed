@@ -115,7 +115,7 @@ class Chunk:
             terrain_height = floor(self.noise([world_pos.x / 250]) * 25)
             if world_pos.y > terrain_height + 4:
                 block = Block(self.scene, world_pos, "stone")
-                self.bg_blocks[pos] = block
+                self.mg_blocks[pos] = block
             elif world_pos.y > terrain_height:
                 block = Block(self.scene, world_pos, "dirt")
                 self.mg_blocks[pos] = block
