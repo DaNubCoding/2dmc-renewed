@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import Callable, Any
 import datetime
 import cProfile
+import pygame
 import pstats
 import os
 
@@ -26,6 +27,26 @@ class Profiler:
     selected: list[int] = []
     profilers: list[Profiler] = []
     running = False
+
+    @classmethod
+    def update(cls, key: int) -> None:
+        """Update the profiler based on the key pressed.
+
+        If F9 is pressed, toggle the profiler activation state.
+        If a number key is pressed and the profiler is activated, select
+        or deselect the profiler at that index.
+        If 0 is pressed and the profiler is activated, clear all selected
+        profilers.
+
+        Args:
+            key: The key that was pressed.
+        """
+        if key == pygame.K_F9:
+            Profiler.toggle()
+        elif pygame.K_1 <= key <= pygame.K_9 and Profiler.activated:
+            Profiler.select(key - pygame.K_0 - 1)
+        elif key == pygame.K_0 and Profiler.activated:
+            Profiler.clear()
 
     @classmethod
     def toggle(cls) -> None:

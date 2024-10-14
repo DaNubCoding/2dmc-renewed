@@ -60,12 +60,7 @@ class Game:
         if pygame.QUIT in self.events:
             raise AbortGame
 
-        if self.key_down == pygame.K_F9:
-            Profiler.toggle()
-        elif pygame.K_1 <= self.key_down <= pygame.K_9 and Profiler.activated:
-            Profiler.select(self.key_down - pygame.K_0 - 1)
-        elif self.key_down == pygame.K_0 and Profiler.activated:
-            Profiler.clear()
+        Profiler.update(self.key_down)
 
     def change_scene(self, scene: Scene) -> None:
         self.scene = scene
