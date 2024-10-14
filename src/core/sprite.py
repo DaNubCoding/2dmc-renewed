@@ -39,6 +39,7 @@ class Sprite(AbstractClass):
 
     @visible.setter
     def visible(self, value: bool) -> None:
+        if value == self._visible: return
         self._visible = value
         if value:
             self.scene.sprite_manager.add_rendering(self)
