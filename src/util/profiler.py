@@ -21,7 +21,7 @@ class Profiler:
             print("Press Backspace to clear selection")
             print("Press F9 again to start selected profilers")
         else:
-            print("Starting selected profilers: ", Profiler.selected)
+            print("Starting selected profilers:", Profiler.selected)
             cls.started = True
 
     @classmethod
@@ -57,6 +57,9 @@ class Profiler:
         Profiler.profilers.append(self)
 
     def __call__(self, *args, **kwargs) -> Any:
+        if not kwargs.pop("cond", True):
+            return self.func(*args, **kwargs)
+
         if not Profiler.started or self.index not in Profiler.selected:
             return self.func(*args, **kwargs)
 
