@@ -7,7 +7,7 @@ import weakref as weakref
 import sys as sys
 import os as os
 
-_BUNDLE_DIR = getattr(
+BUNDLE_DIR = getattr(
     sys, '_MEIPASS',
     Path(os.path.abspath(os.path.dirname(__file__))).parent
 )
@@ -19,7 +19,7 @@ def pathof(file: str) -> str:
         str: The bundled - exe compatible file path
     """
 
-    abspath = os.path.abspath(os.path.join(_BUNDLE_DIR, file))
+    abspath = os.path.abspath(os.path.join(BUNDLE_DIR, file))
     if not os.path.exists(abspath):
         abspath = file
     return abspath
