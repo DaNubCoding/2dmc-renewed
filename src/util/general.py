@@ -1,5 +1,5 @@
+from typing import Any, Iterable, TypeVar
 from numbers import Number as Number
-from typing import Any, Iterable
 from pathlib import Path as Path
 import src.util.vector as vector
 from math import floor as floor
@@ -7,10 +7,12 @@ import weakref as weakref
 import sys as sys
 import os as os
 
+T = TypeVar('T')
 BUNDLE_DIR = getattr(
     sys, '_MEIPASS',
     Path(os.path.abspath(os.path.dirname(__file__))).parent
 )
+
 def pathof(file: str) -> str:
     """Gets the path to the given file that will work with exes.
     Args:
@@ -24,7 +26,10 @@ def pathof(file: str) -> str:
         abspath = file
     return abspath
 
-def ref_proxy(obj: Any) -> Any:
+# Technically the return type should be weakref.ProxyType[T], but that breaks
+# IntelliSense for attribute access on the proxy object, so we will pretend it
+# is just T :P
+def ref_proxy(obj: T) -> T:
     """Create a weak reference proxy to an object if it isn't already one.
 
     Args:
