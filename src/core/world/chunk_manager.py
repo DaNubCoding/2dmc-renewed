@@ -33,7 +33,7 @@ class ChunkManager:
         # Lock to prevent chunk loading and saving from conflicting
         self.region_data_lock = Lock()
 
-        self.seed = 0
+        self.seed = 1
         self.noise = PerlinNoise(octaves=4, seed=self.seed)
 
         self.load_chunks_profiler = Profiler(self.load_chunks_inner)
