@@ -9,7 +9,7 @@ from src.util import *
 from uuid import uuid4
 import pygame
 
-class HeadlessSprite(AbstractClass):
+class Sprite(AbstractClass):
     def __init__(self, scene: Scene, layer: Layer) -> None:
         self.uuid = uuid4()
         self.game = scene.game
@@ -21,7 +21,12 @@ class HeadlessSprite(AbstractClass):
     def update(self, dt: float) -> None:
         pass
 
+    @abstractmethod
+    def draw(self, screen: pygame.Surface) -> None:
+        pass
+
     def post_update(self, dt: float) -> None:
+        # Not all sprites need to implement this method, so it's not abstract
         pass
 
     def remove(self) -> None:
@@ -36,13 +41,15 @@ class HeadlessSprite(AbstractClass):
     def __repr__(self) -> str:
         return self.__str__()
 
-class Sprite(HeadlessSprite):
+class HeadlessSprite(Sprite):
     @abstractmethod
     def update(self, dt: float) -> None:
         pass
 
-    @abstractmethod
     def draw(self, screen: pygame.Surface) -> None:
+        # Headless sprites don't need to be drawn
+        # This is just here to satisfy the abstract method
+        # so that subclasses don't have to implement it
         pass
 
 class CameraSprite(Sprite):

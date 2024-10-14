@@ -1,4 +1,4 @@
-from src.core.sprite import Sprite
+from src.core.sprite import Sprite, HeadlessSprite
 from typing import Callable
 from enum import Enum, auto
 import pygame
@@ -23,12 +23,12 @@ class RenderLayer:
 
     def add(self, sprite: Sprite) -> None:
         self.updating_sprites.append(sprite)
-        if isinstance(sprite, Sprite):
+        if not isinstance(sprite, HeadlessSprite):
             self.rendering_sprites.append(sprite)
 
     def remove(self, sprite: Sprite) -> None:
         self.updating_sprites.remove(sprite)
-        if isinstance(sprite, Sprite):
+        if not isinstance(sprite, HeadlessSprite):
             self.rendering_sprites.remove(sprite)
 
     def __len__(self) -> int:
