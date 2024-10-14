@@ -52,18 +52,20 @@ class Game:
 
     def update(self) -> None:
         self.events = {event.type: event for event in pygame.event.get()}
+        self.key_down = self.events.get(pygame.KEYDOWN).key \
+            if pygame.KEYDOWN in self.events else -1
+        self.key_up = self.events.get(pygame.KEYUP).key \
+            if pygame.KEYUP in self.events else -1
 
         if pygame.QUIT in self.events:
             raise AbortGame
 
-        elif pygame.KEYDOWN in self.events:
-            key: int = self.events[pygame.KEYDOWN].key
-            if key == pygame.K_F9:
-                Profiler.toggle()
-            elif pygame.K_1 <= key <= pygame.K_9 and Profiler.activated:
-                Profiler.select(key - pygame.K_0 - 1)
-            elif key == pygame.K_0 and Profiler.activated:
-                Profiler.clear()
+        if self.key_down == pygame.K_F9:
+            Profiler.toggle()
+        elif pygame.K_1 <= self.key_down <= pygame.K_9 and Profiler.activated:
+            Profiler.select(self.key_down - pygame.K_0 - 1)
+        elif self.key_down == pygame.K_0 and Profiler.activated:
+            Profiler.clear()
 
     def change_scene(self, scene: Scene) -> None:
         self.scene = scene

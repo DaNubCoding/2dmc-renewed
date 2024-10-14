@@ -24,10 +24,8 @@ class MainScene(Scene):
         self.add(self.debug_menu)
 
     def update(self, dt: float) -> None:
-        if pygame.KEYDOWN in self.game.events:
-            key: int = self.game.events[pygame.KEYDOWN].key
-            if key == pygame.K_F3:
-                self.debug_menu.toggle()
+        if self.game.key_down == pygame.K_F3:
+            self.debug_menu.toggle()
 
         self.sprite_manager.update(dt)
 
