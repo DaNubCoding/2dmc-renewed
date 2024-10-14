@@ -6,6 +6,22 @@ import pstats
 import os
 
 class Profiler:
+    """A profiler that can be wrapped around functions to profile them.
+
+    Attributes:
+        activated: Whether the profiler is activated, waiting for selection.
+        selected: The indices of the selected profilers.
+        profilers: The list of all profilers.
+        running: Whether the profilers are still running. Setting this to
+            True will start the selected profilers, and will be automatically
+            set to False when all selected profilers finish.
+
+    Args:
+        func: The function to profile.
+        save: Whether to save the profile to a file. Defaults to True.
+        print: Whether to print the profile to the console. Defaults to False.
+    """
+
     activated = False
     selected: list[int] = []
     profilers: list[Profiler] = []
@@ -13,6 +29,11 @@ class Profiler:
 
     @classmethod
     def toggle(cls) -> None:
+        """Toggle the profiler activation state.
+
+        If activated, print the list of profilers and wait for selection.
+        If deactivated, start the selected profilers.
+        """
         cls.activated = not cls.activated
         if cls.activated:
             print("Profiler activated, please select profilers:")
@@ -26,6 +47,15 @@ class Profiler:
 
     @classmethod
     def select(cls, index: int) -> None:
+        """Select or deselect a profiler by its index.
+
+        Args:
+            index: The index of the profiler to select or deselect.
+        """
+        if not Profiler.activated:
+            print("Profiler is not activated, cannot select profilers")
+            return
+
         if index >= len(Profiler.profilers):
             max_index = len(Profiler.profilers) - 1
             print(f"Profiler at index {index} does not exist, "
@@ -44,6 +74,7 @@ class Profiler:
 
     @classmethod
     def clear(cls) -> None:
+        """Clear all selected profilers."""
         Profiler.selected = []
         print("All profilers deselected")
 
@@ -57,6 +88,19 @@ class Profiler:
         Profiler.profilers.append(self)
 
     def __call__(self, *args, **kwargs) -> Any:
+        """Profile the function and return its return value.
+
+        This will also save the profile to a file if the save attribute is
+        set to True, and print the profile to the console if the print
+        attribute is set to True.
+
+        Args:
+            *args: The positional arguments to pass to the function.
+            **kwargs: The keyword arguments to pass to the function.
+
+        Returns:
+            The return value of the function.
+        """
         if not kwargs.pop("cond", True):
             return self.func(*args, **kwargs)
 
