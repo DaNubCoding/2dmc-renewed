@@ -13,6 +13,7 @@ pygame-ce = "^2.5.1"
 multimethod = "^1.12"
 bidict = "^0.23.1"
 perlin-noise = "^1.13"
+snakeviz = "^2.2.0"
 
 
 [build-system]
