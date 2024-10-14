@@ -1,4 +1,5 @@
 from src.core.world.chunk import Chunk
+from src.util.profiler import Profiler
 from perlin_noise import PerlinNoise
 from threading import Thread, Lock
 from src.core.scene import Scene
@@ -34,6 +35,8 @@ class ChunkManager:
 
         self.seed = 0
         self.noise = PerlinNoise(octaves=4, seed=self.seed)
+
+        self.load_chunks_profiler = Profiler(self.load_chunks_inner)
 
     def start(self) -> None:
         Thread(target=self.queue_chunks, daemon=True).start()
@@ -72,9 +75,14 @@ class ChunkManager:
             self.load_clock.tick(CHUNK_LOAD_MAX_FREQ)
 
             if not self.pending_positions: continue
-            chunk_pos = self.pending_positions.pop()
-            chunk = Chunk(self.scene, chunk_pos)
-            self.loaded_chunks[chunk_pos] = chunk
+
+            # self.load_chunks_inner()
+            self.load_chunks_profiler()
+
+    def load_chunks_inner(self) -> None:
+        chunk_pos = self.pending_positions.pop()
+        chunk = Chunk(self.scene, chunk_pos)
+        self.loaded_chunks[chunk_pos] = chunk
 
     def autosave_regions(self) -> None:
         while True:
