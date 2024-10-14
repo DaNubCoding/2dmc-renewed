@@ -23,13 +23,19 @@ class RenderLayer:
 
     def add(self, sprite: Sprite) -> None:
         self.updating_sprites.append(sprite)
-        if not isinstance(sprite, HeadlessSprite):
-            self.rendering_sprites.append(sprite)
+        if sprite.visible:
+            self.add_rendering(sprite)
+
+    def add_rendering(self, sprite: Sprite) -> None:
+        self.rendering_sprites.append(sprite)
 
     def remove(self, sprite: Sprite) -> None:
         self.updating_sprites.remove(sprite)
-        if not isinstance(sprite, HeadlessSprite):
-            self.rendering_sprites.remove(sprite)
+        if sprite.visible:
+            self.remove_rendering(sprite)
+
+    def remove_rendering(self, sprite: Sprite) -> None:
+        self.rendering_sprites.remove(sprite)
 
     def __len__(self) -> int:
         return len(self.updating_sprites)

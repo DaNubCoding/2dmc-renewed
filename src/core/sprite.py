@@ -16,6 +16,7 @@ class Sprite(AbstractClass):
         self.scene = ref_proxy(scene)
         self.layer = layer
         self.pos = Vec(0, 0)
+        self._visible = True
 
     @abstractmethod
     def update(self, dt: float) -> None:
@@ -32,6 +33,21 @@ class Sprite(AbstractClass):
     def remove(self) -> None:
         self.scene.sprite_manager.remove(self)
 
+    @property
+    def visible(self) -> bool:
+        return self._visible
+
+    @visible.setter
+    def visible(self, value: bool) -> None:
+        self._visible = value
+        if value:
+            self.scene.sprite_manager.add_rendering(self)
+        else:
+            try:
+                self.scene.sprite_manager.remove_rendering(self)
+            except ValueError:
+                pass
+
     def __hash__(self) -> int:
         return hash(self.uuid)
 
@@ -42,14 +58,17 @@ class Sprite(AbstractClass):
         return self.__str__()
 
 class HeadlessSprite(Sprite):
+    def __init__(self, scene: Scene, layer: Layer) -> None:
+        super().__init__(scene, layer)
+        self._visible = False
+
     @abstractmethod
     def update(self, dt: float) -> None:
         pass
 
     def draw(self, screen: pygame.Surface) -> None:
-        # Headless sprites don't need to be drawn
-        # This is just here to satisfy the abstract method
-        # so that subclasses don't have to implement it
+        # Headless sprites don't need to be drawn. This is just here to satisfy
+        # the abstract method so that subclasses don't have to implement it
         pass
 
 class CameraSprite(Sprite):
