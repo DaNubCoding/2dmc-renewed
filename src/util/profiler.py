@@ -9,7 +9,7 @@ class Profiler:
     activated = False
     selected: list[int] = []
     profilers: list[Profiler] = []
-    started = False
+    running = False
 
     @classmethod
     def toggle(cls) -> None:
@@ -22,7 +22,7 @@ class Profiler:
             print("Press F9 again to start selected profilers")
         else:
             print("Starting selected profilers:", Profiler.selected)
-            cls.started = True
+            cls.running = True
 
     @classmethod
     def select(cls, index: int) -> None:
@@ -60,7 +60,7 @@ class Profiler:
         if not kwargs.pop("cond", True):
             return self.func(*args, **kwargs)
 
-        if not Profiler.started or self.index not in Profiler.selected:
+        if not Profiler.running or self.index not in Profiler.selected:
             return self.func(*args, **kwargs)
 
         with cProfile.Profile() as pr:
@@ -81,7 +81,7 @@ class Profiler:
         Profiler.selected.remove(self.index)
         print(f"Profiler {self.name} at index {self.index} finished")
         if not Profiler.selected:
-            Profiler.started = False
+            Profiler.running = False
             print("All profilers finished")
 
         return ret
