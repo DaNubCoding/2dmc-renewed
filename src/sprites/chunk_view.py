@@ -28,6 +28,8 @@ class ChunkView(CameraSprite):
         pass
 
     def draw(self, screen: pygame.Surface) -> None:
+        if not self.on_screen: return
+
         if self.modified:
             for pos in iter_square(CHUNK):
                 if pos not in self.blocks: continue
@@ -37,3 +39,8 @@ class ChunkView(CameraSprite):
             self.modified = False
 
         screen.blit(self.image, self.screen_pos)
+
+    @property
+    def on_screen(self) -> bool:
+        return pygame.Rect(self.screen_pos, BLOCKCHUNKXY) \
+            .colliderect(pygame.Rect(0, 0, *SIZE))
