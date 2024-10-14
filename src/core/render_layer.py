@@ -34,7 +34,6 @@ class RenderLayer:
     def __len__(self) -> int:
         return len(self.updating_sprites)
 
-
 class Layer(Enum):
     BG = auto()
     MG = auto()
