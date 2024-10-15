@@ -46,3 +46,4 @@ class Layer(Enum):
     PLAYER = auto()
     FG = auto()
     HUD = auto()
+    CROSSHAIR = auto()

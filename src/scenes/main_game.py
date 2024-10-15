@@ -6,6 +6,7 @@ if TYPE_CHECKING:
 from src.core.world.chunk_manager import ChunkManager
 from src.core.world.block_manager import BlockManager
 from src.sprites.debug_menu import DebugMenu
+from src.sprites.crosshair import Crosshair
 from src.sprites.camera import Camera
 from src.core.scene import Scene
 import pygame
@@ -22,6 +23,9 @@ class MainScene(Scene):
 
         self.debug_menu = DebugMenu(self)
         self.add(self.debug_menu)
+
+        self.crosshair = Crosshair(self)
+        self.add(self.crosshair)
 
     def update(self, dt: float) -> None:
         if self.game.key_down == pygame.K_F3:
