@@ -126,8 +126,3 @@ class Chunk:
     def unload(self) -> None:
         for view in self.views.values():
             self.scene.remove(view)
-
-class ChunkLayer(Enum):
-    BG = auto()
-    MG = auto()
-    FG = auto()

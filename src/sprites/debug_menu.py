@@ -14,6 +14,7 @@ class DebugMenu(Sprite):
             "FPS": 0,
             "Selected Position": (0, 0),
             "Selected Chunk": (0, 0),
+            "Chunk Render Layers": None,
             "Loaded Chunks": 0,
             "Loaded Regions": 0,
         }
@@ -26,6 +27,7 @@ class DebugMenu(Sprite):
         self.data["FPS"] = int(self.game.clock.get_fps())
         self.data["Selected Position"] = self.scene.crosshair.block_pos.iconcise
         self.data["Selected Chunk"] = self.scene.crosshair.chunk_pos.iconcise
+        self.data["Chunk Render Layers"] = ",".join(view.chunk_layer.name for view in self.scene.chunk_manager.loaded_chunks[self.scene.crosshair.chunk_pos].views.values() if view.visible) or None
         self.data["Loaded Chunks"] = f"{len(self.scene.chunk_manager.loaded_chunks)}/{len(self.scene.chunk_manager.loaded_chunks) + len(self.scene.chunk_manager.pending_positions)}"
         self.data["Loaded Regions"] = len(self.scene.chunk_manager.region_data)
 

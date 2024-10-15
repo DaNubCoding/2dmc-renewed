@@ -21,24 +21,54 @@ class ChunkView(CameraSprite):
         # drawn at the wrong location for one frame
         self.screen_pos = self.pos - self.scene.camera.pos
         self.modified = True
+        # Whether the chunk view is sticky to the layer above it
+        # Sticky chunk views will not be drawn, and will instead be drawn as
+        # part of the chunk view above it
+        # NOTE: in future, this will be set to False when things need to be
+        # rendered in between layers
+        self.sticky = True
 
         self.image = pygame.Surface(BLOCKCHUNKXY, pygame.SRCALPHA)
 
     def update(self, dt: float) -> None:
-        pass
+        self.visible = not self.sticky or \
+            self.chunk_layer.value == len(ChunkLayer)
 
     def draw(self, screen: pygame.Surface) -> None:
         if not self.on_screen: return
 
         if self.modified:
-            for pos in iter_square(CHUNK):
-                if pos not in self.blocks: continue
-                block = self.blocks[pos]
-                self.image.blit(block.image, pos * BLOCK)
-            pygame.draw.rect(self.image, (0, 255, 0), (0, 0, *BLOCKCHUNKXY), 1)
-            self.modified = False
+            self.redraw()
 
         screen.blit(self.image, self.screen_pos)
+
+        color = (0, 255, 0)
+        if self.chunk_layer == ChunkLayer.MG:
+            color = (0, 180, 0)
+        elif self.chunk_layer == ChunkLayer.BG:
+            color = (0, 100, 0)
+        width = (4 - self.chunk_layer.value) * 2
+        pygame.draw.rect(screen, color, (*self.screen_pos, *BLOCKCHUNKXY), width)
+
+    def redraw(self) -> None:
+        for layer in self.chunk.blocks:
+            view = self.chunk.views[layer]
+            # If we have reached the layer that this view is responsible for,
+            # draw the blocks in that layer and stop
+            if layer == self.chunk_layer:
+                for pos, block in self.chunk.blocks[layer].items():
+                    self.image.blit(block.image, pos * BLOCK)
+                break
+            # If we are on a layer below the layer that this view is
+            # responsible for, and the view is not sticky, let that view draw
+            # its own blocks (hence do nothing). If the view is sticky, draw
+            # the blocks in that view onto this view
+            if not view.sticky: break
+            if view.modified:
+                view.redraw()
+            self.image.blit(view.image, (0, 0))
+
+        self.modified = False
 
     @property
     def on_screen(self) -> bool:
