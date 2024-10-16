@@ -4,9 +4,9 @@ if TYPE_CHECKING:
     from src.core.world.chunk_manager import ChunkManager
 
 from src.sprites.chunk_view import ChunkView
+from src.util.enum_dict import IntEnumDict
 from src.core.world.block import Block
 from src.core.scene import Scene
-from enum import Enum, auto
 from typing import Optional
 from src.constants import *
 from src.util import *
@@ -24,19 +24,13 @@ class Chunk:
         self.pos = Vec(pos)
         self.region = self.pos // REGION
 
-        self.bg_blocks: dict[Vec, Block] = {}
-        self.mg_blocks: dict[Vec, Block] = {}
-        self.fg_blocks: dict[Vec, Block] = {}
-        self.blocks = {
-            ChunkLayer.BG: self.bg_blocks,
-            ChunkLayer.MG: self.mg_blocks,
-            ChunkLayer.FG: self.fg_blocks,
-        }
-        self.views = {
-            ChunkLayer.BG: ChunkView(self.scene, self, ChunkLayer.BG),
-            ChunkLayer.MG: ChunkView(self.scene, self, ChunkLayer.MG),
-            ChunkLayer.FG: ChunkView(self.scene, self, ChunkLayer.FG),
-        }
+        self.blocks = IntEnumDict(ChunkLayer)
+        for layer in ChunkLayer:
+            self.blocks[layer] = {}
+
+        self.views = IntEnumDict(ChunkLayer)
+        for layer in ChunkLayer:
+            self.views[layer] = ChunkView(self.scene, self, layer)
 
         """
         Pipeline:
@@ -115,13 +109,13 @@ class Chunk:
             terrain_height = floor(self.noise([world_pos.x / 250]) * 25)
             if world_pos.y > terrain_height + 4:
                 block = Block(self.scene, world_pos, "stone")
-                self.mg_blocks[pos] = block
+                self.blocks["MG"][pos] = block
             elif world_pos.y > terrain_height:
                 block = Block(self.scene, world_pos, "dirt")
-                self.mg_blocks[pos] = block
+                self.blocks["MG"][pos] = block
             elif world_pos.y == terrain_height:
                 block = Block(self.scene, world_pos, "grass_block")
-                self.mg_blocks[pos] = block
+                self.blocks["MG"][pos] = block
 
     def unload(self) -> None:
         for view in self.views.values():
