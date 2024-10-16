@@ -3,7 +3,7 @@ package-mode = false
 name = "2dmc-renewed"
 version = "0.1.0"
 description = "Full rewrite of 2DMC."
-authors = ["DaNubCoding"]
+authors = ["DaNubCoding <danubcoding@gmail.com>"]
 license = "GPL-3.0"
 readme = "README.md"
 
