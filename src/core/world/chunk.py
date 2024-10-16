@@ -24,24 +24,21 @@ class Chunk:
         self.pos = Vec(pos)
         self.region = self.pos // REGION
 
-        self.blocks = IntEnumDict(ChunkLayer)
-        for layer in ChunkLayer:
-            self.blocks[layer] = {}
+        self.blocks = IntEnumDict({layer: {} for layer in ChunkLayer})
 
-        self.views = IntEnumDict(ChunkLayer)
-        for layer in ChunkLayer:
-            self.views[layer] = ChunkView(self.scene, self, layer)
+        self.views = IntEnumDict({
+            layer: ChunkView(self.scene, self, layer)
+            for layer in ChunkLayer
+        })
 
-        """
-        Pipeline:
-        - Try to load region data from memory
-          - If it doesn't exist, try to load region data from disk
-            - If it doesn't exist on disk, add new region to memory
-              - Generate new chunk data
-            - If it does exist on disk, load region data from disk to memory
-              - Load chunk data from region data
-          - If it does exist, load chunk data from region data
-        """
+        # Pipeline:
+        # - Try to load region data from memory
+        #   - If it doesn't exist, try to load region data from disk
+        #     - If it doesn't exist on disk, add new region to memory
+        #       - Generate new chunk data
+        #     - If it does exist on disk, load region data from disk to memory
+        #       - Load chunk data from region data
+        #   - If it does exist, load chunk data from region data
 
         loaded_successfully = self.try_load()
         if not loaded_successfully:
