@@ -11,7 +11,7 @@ class RenderLayer:
     def update(self, dt: float) -> None:
         for sprite in self.updating_sprites:
             sprite.update(dt)
-            sprite.post_update(dt)
+            sprite.pre_render(dt)
 
     def draw(self, screen: pygame.Surface) -> None:
         if self.key is not None:
