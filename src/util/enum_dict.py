@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, TypeVar, Generic
+from typing import TypeVar, Generic
 from multimethod import multimeta
 from enum import IntEnum
 
