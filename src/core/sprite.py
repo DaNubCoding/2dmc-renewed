@@ -26,7 +26,7 @@ class Sprite(AbstractClass):
     def draw(self, screen: pygame.Surface) -> None:
         pass
 
-    def pre_render(self, dt: float) -> None:
+    def pre_render(self) -> None:
         # Not all sprites need to implement this method, so it's not abstract
         pass
 
@@ -77,7 +77,7 @@ class CameraSprite(Sprite):
         super().__init__(scene, layer)
         self.screen_pos = self.pos
 
-    def pre_render(self, dt: float) -> None:
+    def pre_render(self) -> None:
         self.screen_pos = self.pos - self.scene.camera.pos
 
     @abstractmethod

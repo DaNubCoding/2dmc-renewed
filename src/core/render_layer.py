@@ -11,13 +11,13 @@ class RenderLayer:
     def update(self, dt: float) -> None:
         for sprite in self.updating_sprites:
             sprite.update(dt)
-            sprite.pre_render(dt)
 
     def draw(self, screen: pygame.Surface) -> None:
         if self.key is not None:
             self.rendering_sprites.sort(key=self.key)
 
         for sprite in self.rendering_sprites:
+            sprite.pre_render()
             sprite.draw(screen)
 
     def add(self, sprite: Sprite) -> None:
