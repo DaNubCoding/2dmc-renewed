@@ -8,6 +8,15 @@ T = TypeVar("T", bound=IntEnum)
 V = TypeVar("V")
 
 class IntEnumDict(Generic[T, V], dict, metaclass=multimeta):
+    """A dictionary that only accepts IntEnum keys.
+
+    This dictionary is designed to be used with IntEnums only. It will take
+    either the enum member itself, the enum name as a string, or the enum value
+    as an integer as the key, and will return the member or value associated
+    with that key. This dictionary will raise a KeyError if the key is not a
+    member, name, or value of the enum.
+    """
+
     def __init__(self, source: dict[T, V]) -> None:
         super().__init__(source)
         self.enum = type(next(iter(source)))
