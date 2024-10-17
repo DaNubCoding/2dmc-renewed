@@ -58,20 +58,13 @@ class ChunkView(CameraSprite):
 
         screen.blit(self.image, self.screen_pos)
 
-        color = (0, 255, 0)
-        if self.chunk_layer == ChunkLayer.MG:
-            color = (0, 180, 0)
-        elif self.chunk_layer == ChunkLayer.BG:
-            color = (0, 100, 0)
-        width = (4 - self.chunk_layer.value) * 2
-        pygame.draw.rect(screen, color, (*self.screen_pos, *BLOCKCHUNKXY), width)
-
     def redraw(self) -> None:
         self.image.fill((0, 0, 0, 0))
 
         for layer in reversed(self.responsible_layers):
             for pos, block in self.chunk.views[layer].blocks.items():
                 self.image.blit(block.image, pos * BLOCK)
+        pygame.draw.rect(self.image, (0, 255, 0), (0, 0, *BLOCKCHUNKXY), 1)
 
         self.modified = False
 
