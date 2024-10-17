@@ -1,6 +1,5 @@
-from src.core.sprite import Sprite, HeadlessSprite
+from src.core.sprite import Sprite
 from typing import Callable
-from enum import Enum, auto
 import pygame
 
 class RenderLayer:
