@@ -9,7 +9,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-pygame-ce = "^2.5.1"
+pygame-ce = {version = "^2.5.2.dev2", allow-prereleases = true}
 multimethod = "^1.12"
 bidict = "^0.23.1"
 perlin-noise = "^1.13"
