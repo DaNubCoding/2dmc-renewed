@@ -26,11 +26,17 @@ class ChunkView(CameraSprite):
         # NOTE: in future, this will be set to False when things need to be
         # rendered in between layers
         self.sticky = True
+        # Whether a sticky attribute has been modified in any of the layers in
+        # this chunk
+        self.sticky_modified = True
         self.responsible_layers = []
 
         self.image = pygame.Surface(BLOCKCHUNKXY, pygame.SRCALPHA)
 
     def update(self, dt: float) -> None:
+        if not self.sticky_modified: return
+        self.sticky_modified = False
+
         layer_val = self.chunk_layer.value
 
         if self.sticky and layer_val != len(ChunkLayer):
