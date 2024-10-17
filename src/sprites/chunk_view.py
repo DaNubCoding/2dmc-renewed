@@ -4,9 +4,7 @@ if TYPE_CHECKING:
     from src.core.world.chunk import Chunk, ChunkLayer
 
 from src.core.sprite import CameraSprite
-from src.core.render_layer import Layer
 from src.core.scene import Scene
-from typing import Optional
 from src.constants import *
 from src.util import *
 import pygame

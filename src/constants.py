@@ -1,8 +1,16 @@
 from src.util import Vec as _Vec
-from enum import IntEnum as _IntEnum, auto as _auto
+from enum import IntEnum as _IntEnum, auto as _auto, Enum as _Enum
 
 WIDTH, HEIGHT = 1280, 768 # pixels
 SIZE = _Vec(WIDTH, HEIGHT) # pixels
+
+class Layer(_Enum):
+    BG = _auto()
+    MG = _auto()
+    PLAYER = _auto()
+    FG = _auto()
+    HUD = _auto()
+    CROSSHAIR = _auto()
 
 BLOCK = 64 # pixels
 CHUNK = 8 # blocks

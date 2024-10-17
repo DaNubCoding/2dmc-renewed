@@ -1,10 +1,10 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from src.core.render_layer import Layer
     from src.core.scene import Scene
 
 from abc import ABC as AbstractClass, abstractmethod
+from src.constants import *
 from src.util import *
 from uuid import uuid4
 import pygame

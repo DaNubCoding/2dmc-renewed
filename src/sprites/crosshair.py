@@ -1,4 +1,3 @@
-from src.core.render_layer import Layer
 from src.core.sprite import Sprite
 from src.core.scene import Scene
 from src.constants import *

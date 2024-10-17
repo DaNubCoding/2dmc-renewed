@@ -1,9 +1,8 @@
-from src.core.render_layer import Layer
 from src.core.sprite import Sprite
 from src.core.scene import Scene
+from src.constants import *
 from src.util import *
 import pygame
-import time
 
 class DebugMenu(Sprite):
     def __init__(self, scene: Scene) -> None:

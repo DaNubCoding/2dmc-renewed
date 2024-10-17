@@ -1,6 +1,6 @@
-from src.core.sprite import HeadlessSprite, Sprite
-from src.core.render_layer import Layer
+from src.core.sprite import HeadlessSprite
 from src.core.scene import Scene
+from src.constants import *
 from src.util import *
 import pygame
 
