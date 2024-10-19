@@ -1,5 +1,5 @@
-from src.util import Vec as _Vec
 from enum import IntEnum as _IntEnum, auto as _auto, Enum as _Enum
+from src.util import Vec as _Vec
 
 WIDTH, HEIGHT = 1280, 768 # pixels
 SIZE = _Vec(WIDTH, HEIGHT) # pixels

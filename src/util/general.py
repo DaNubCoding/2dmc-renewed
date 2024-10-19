@@ -1,11 +1,11 @@
-from typing import Any, Iterable, TypeVar
-from numbers import Number as Number
-from pathlib import Path as Path
+from typing import Iterable, TypeVar
 import src.util.vector as vector
-from math import floor as floor
-import weakref as weakref
-import sys as sys
-import os as os
+from src.util.typing import *
+from pathlib import Path
+from math import floor
+import weakref
+import sys
+import os
 
 T = TypeVar('T')
 BUNDLE_DIR = getattr(
@@ -54,7 +54,7 @@ def read_file(path: str) -> str:
     with open(path, "r") as file:
         return file.read()
 
-def inttup(tup: tuple[Number, Number]) -> tuple:
+def inttup(tup: Coord) -> tuple:
     """Convert a tuple of 2 numbers to a tuple of 2 ints.
 
     This uses the floor function to convert the numbers to ints.
@@ -67,7 +67,7 @@ def inttup(tup: tuple[Number, Number]) -> tuple:
     """
     return (floor(tup[0]), floor(tup[1]))
 
-def iter_rect(left: int, right: int, top: int, bottom: int) -> Iterable[tuple[int, int]]:
+def iter_rect(left: int, right: int, top: int, bottom: int) -> Iterable[IntCoord]:
     """Iterate over the coordinates of a rectangle.
 
     Args:
@@ -83,7 +83,7 @@ def iter_rect(left: int, right: int, top: int, bottom: int) -> Iterable[tuple[in
         for y in range(int(top), int(bottom) + 1):
             yield vector.Vec(x, y)
 
-def iter_square(size: int) -> Iterable[tuple[int, int]]:
+def iter_square(size: int) -> Iterable[IntCoord]:
     """Iterate over the coordinates of a square.
 
     Args:
