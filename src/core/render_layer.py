@@ -20,21 +20,40 @@ class RenderLayer:
             sprite.pre_render()
             sprite.draw(screen)
 
-    def add(self, sprite: Sprite) -> None:
+    def add(self, sprite: Sprite) -> bool:
+        if sprite in self.updating_sprites:
+            return False
         self.updating_sprites.append(sprite)
+        sprite.on_add()
+        sprite.in_scene = True
         if sprite.visible:
-            self.add_rendering(sprite)
+            return self.add_rendering(sprite)
+        return True
 
-    def add_rendering(self, sprite: Sprite) -> None:
+    def add_rendering(self, sprite: Sprite) -> bool:
+        if sprite in self.rendering_sprites:
+            return False
         self.rendering_sprites.append(sprite)
+        return True
 
-    def remove(self, sprite: Sprite) -> None:
-        self.updating_sprites.remove(sprite)
+    def remove(self, sprite: Sprite) -> bool:
+        try:
+            self.updating_sprites.remove(sprite)
+            success = True
+        except ValueError:
+            success = False
+        sprite.on_remove()
+        sprite.in_scene = False
         if sprite.visible:
-            self.remove_rendering(sprite)
+            success &= self.remove_rendering(sprite)
+        return success
 
-    def remove_rendering(self, sprite: Sprite) -> None:
-        self.rendering_sprites.remove(sprite)
+    def remove_rendering(self, sprite: Sprite) -> bool:
+        try:
+            self.rendering_sprites.remove(sprite)
+        except ValueError:
+            return False
+        return True
 
     def __len__(self) -> int:
         return len(self.updating_sprites)

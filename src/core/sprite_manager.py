@@ -15,14 +15,14 @@ class SpriteManager:
         for layer in self.layers.values():
             layer.draw(screen)
 
-    def add(self, sprite: Sprite) -> None:
-        self.layers[sprite.layer].add(sprite)
+    def add(self, sprite: Sprite) -> bool:
+        return self.layers[sprite.layer].add(sprite)
 
     def add_rendering(self, sprite: Sprite) -> None:
         self.layers[sprite.layer].add_rendering(sprite)
 
-    def remove(self, sprite: Sprite) -> None:
-        self.layers[sprite.layer].remove(sprite)
+    def remove(self, sprite: Sprite) -> bool:
+        return self.layers[sprite.layer].remove(sprite)
 
     def remove_rendering(self, sprite: Sprite) -> None:
         self.layers[sprite.layer].remove_rendering(sprite)

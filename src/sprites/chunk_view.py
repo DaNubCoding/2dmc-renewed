@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.core.world.chunk import Chunk, ChunkLayer
 
+from src.sprites.visual_debug import DebugRect
 from src.core.sprite import CameraSprite
 from src.core.scene import Scene
 from src.constants import *
@@ -16,6 +17,7 @@ class ChunkView(CameraSprite):
         self.chunk_layer = chunk_layer
         self.blocks = chunk.blocks[chunk_layer]
         self.pos = chunk.pos * BLOCKCHUNK
+        self.size = BLOCKCHUNKXY.copy()
         # Update screen position in init so that the chunk view doesn't get
         # drawn at the wrong location for one frame
         self.screen_pos = self.pos - self.scene.camera.pos
@@ -32,6 +34,9 @@ class ChunkView(CameraSprite):
         self.responsible_layers = []
 
         self.image = pygame.Surface(BLOCKCHUNKXY, pygame.SRCALPHA)
+
+        self.debug_rect = DebugRect(self.scene, self, (255, 0, 0), 1)
+        self.scene.add(self.debug_rect)
 
     def update(self, dt: float) -> None:
         if not self.sticky_modified: return
@@ -70,11 +75,18 @@ class ChunkView(CameraSprite):
         for layer in reversed(self.responsible_layers):
             for pos, block in self.chunk.views[layer].blocks.items():
                 self.image.blit(block.image, pos * BLOCK)
-        pygame.draw.rect(self.image, (0, 255, 0), (0, 0, *BLOCKCHUNKXY), 1)
 
         self.modified = False
+
+    @CameraSprite.visible.setter
+    def visible(self, value: bool) -> None:
+        CameraSprite.visible.fset(self, value)
+        (self.scene.add if value else self.scene.remove)(self.debug_rect)
 
     @property
     def on_screen(self) -> bool:
         return pygame.Rect(self.screen_pos, BLOCKCHUNKXY) \
             .colliderect(pygame.Rect(0, 0, *SIZE))
+
+    def on_remove(self) -> None:
+        self.scene.remove(self.debug_rect)

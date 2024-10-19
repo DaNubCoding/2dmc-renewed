@@ -24,8 +24,8 @@ class Scene(AbstractClass):
     def quit(self) -> None:
         pass
 
-    def add(self, sprite: Sprite) -> None:
-        self.sprite_manager.add(sprite)
+    def add(self, sprite: Sprite) -> bool:
+        return self.sprite_manager.add(sprite)
 
-    def remove(self, sprite: Sprite) -> None:
-        self.sprite_manager.remove(sprite)
+    def remove(self, sprite: Sprite) -> bool:
+        return self.sprite_manager.remove(sprite)

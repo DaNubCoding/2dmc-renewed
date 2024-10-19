@@ -9,6 +9,7 @@ class Layer(_Enum):
     MG = _auto()
     PLAYER = _auto()
     FG = _auto()
+    DEBUG = _auto()
     HUD = _auto()
     CROSSHAIR = _auto()
 

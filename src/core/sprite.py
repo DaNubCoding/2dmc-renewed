@@ -17,6 +17,7 @@ class Sprite(AbstractClass):
         self.layer = layer
         self.pos = Vec(0, 0)
         self._visible = True
+        self.in_scene = False
 
     @abstractmethod
     def update(self, dt: float) -> None:
@@ -30,8 +31,11 @@ class Sprite(AbstractClass):
         # Not all sprites need to implement this method, so it's not abstract
         pass
 
-    def remove(self) -> None:
-        self.scene.sprite_manager.remove(self)
+    def on_add(self) -> None:
+        pass
+
+    def on_remove(self) -> None:
+        pass
 
     @property
     def visible(self) -> bool:
