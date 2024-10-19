@@ -1,5 +1,5 @@
 from typing import Iterable, TypeVar
-import src.util.vector as vector
+from src.util.vector import Vec
 from src.util.typing import *
 from pathlib import Path
 from math import floor
@@ -81,7 +81,7 @@ def iter_rect(left: int, right: int, top: int, bottom: int) -> Iterable[IntCoord
     """
     for x in range(int(left), int(right) + 1):
         for y in range(int(top), int(bottom) + 1):
-            yield vector.Vec(x, y)
+            yield Vec(x, y)
 
 def iter_square(size: int) -> Iterable[IntCoord]:
     """Iterate over the coordinates of a square.

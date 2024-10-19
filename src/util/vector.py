@@ -1,9 +1,9 @@
-import src.util.general as general
 from multimethod import multimeta
 from pygame.math import Vector2
 from src.util.typing import *
 from numbers import Number
 from typing import Self
+from math import floor
 
 class Vec(Vector2, metaclass=multimeta):
     """A 2D vector class with more utility methods and modified behavior."""
@@ -12,12 +12,10 @@ class Vec(Vector2, metaclass=multimeta):
     def itup(self) -> IntCoord:
         """Return the vector as a tuple of ints.
 
-        This uses the `inttup` function to convert the components to ints.
-
         Returns:
             The integer tuple.
         """
-        return general.inttup(self)
+        return (floor(self.x), floor(self.y))
 
     @property
     def ivec(self) -> Self:
