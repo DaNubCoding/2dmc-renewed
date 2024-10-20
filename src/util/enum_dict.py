@@ -4,10 +4,10 @@ from typing import TypeVar, Generic
 from multimethod import multimeta
 from enum import IntEnum
 
-T = TypeVar("T", bound=IntEnum)
-V = TypeVar("V")
+KT = TypeVar("KT", bound=IntEnum)
+VT = TypeVar("VT")
 
-class IntEnumDict(Generic[T, V], dict, metaclass=multimeta):
+class IntEnumDict(Generic[KT, VT], dict[KT, VT], metaclass=multimeta):
     """A dictionary that only accepts IntEnum keys.
 
     This dictionary is designed to be used with IntEnums only. It will take
@@ -17,14 +17,14 @@ class IntEnumDict(Generic[T, V], dict, metaclass=multimeta):
     member, name, or value of the enum.
     """
 
-    def __init__(self, source: dict[T, V]) -> None:
+    def __init__(self, source: dict[KT, VT]) -> None:
         super().__init__(source)
         self.enum = type(next(iter(source)))
 
-    def __setitem__(self, key: T, value: V) -> None:
+    def __setitem__(self, key: KT, value: VT) -> None:
         super().__setitem__(key, value)
 
-    def __setitem__(self, key: str, value: V) -> None:
+    def __setitem__(self, key: str, value: VT) -> None:
         try:
             key = self.enum[key]
         except KeyError:
@@ -33,7 +33,7 @@ class IntEnumDict(Generic[T, V], dict, metaclass=multimeta):
             }]")
         super().__setitem__(key, value)
 
-    def __setitem__(self, key: int, value: V) -> None:
+    def __setitem__(self, key: int, value: VT) -> None:
         try:
             key = self.enum(key)
         except ValueError:
@@ -42,10 +42,10 @@ class IntEnumDict(Generic[T, V], dict, metaclass=multimeta):
             }]")
         super().__setitem__(key, value)
 
-    def __getitem__(self, key: T) -> V:
+    def __getitem__(self, key: KT) -> VT:
         return super().__getitem__(key)
 
-    def __getitem__(self, key: str) -> V:
+    def __getitem__(self, key: str) -> VT:
         try:
             key = self.enum[key]
         except KeyError:
@@ -54,7 +54,7 @@ class IntEnumDict(Generic[T, V], dict, metaclass=multimeta):
             }]")
         return super().__getitem__(key)
 
-    def __getitem__(self, key: int) -> V:
+    def __getitem__(self, key: int) -> VT:
         try:
             key = self.enum(key)
         except ValueError:
@@ -63,7 +63,7 @@ class IntEnumDict(Generic[T, V], dict, metaclass=multimeta):
             }]")
         return super().__getitem__(key)
 
-    def __delitem__(self, key: T) -> None:
+    def __delitem__(self, key: KT) -> None:
         super().__delitem__(key)
 
     def __delitem__(self, key: str) -> None:
@@ -84,7 +84,7 @@ class IntEnumDict(Generic[T, V], dict, metaclass=multimeta):
             }]")
         super().__delitem__(key)
 
-    def __contains__(self, key: T) -> bool:
+    def __contains__(self, key: KT) -> bool:
         return super().__contains__(key)
 
     def __contains__(self, key: str) -> bool:
@@ -101,51 +101,51 @@ class IntEnumDict(Generic[T, V], dict, metaclass=multimeta):
             return False
         return super().__contains__(key)
 
-    def get(self, key: T, default: V = None) -> V:
+    def get(self, key: KT, default: VT = None) -> VT:
         return super().get(key, default)
 
-    def get(self, key: str, default: V = None) -> V:
+    def get(self, key: str, default: VT = None) -> VT:
         try:
             key = self.enum[key]
         except KeyError:
             return default
         return super().get(key, default)
 
-    def get(self, key: int, default: V = None) -> V:
+    def get(self, key: int, default: VT = None) -> VT:
         try:
             key = self.enum(key)
         except ValueError:
             return default
         return super().get(key, default)
 
-    def pop(self, key: T, default: V = None) -> V:
+    def pop(self, key: KT, default: VT = None) -> VT:
         return super().pop(key, default)
 
-    def pop(self, key: str, default: V = None) -> V:
+    def pop(self, key: str, default: VT = None) -> VT:
         try:
             key = self.enum[key]
         except KeyError:
             return default
         return super().pop(key, default)
 
-    def pop(self, key: int, default: V = None) -> V:
+    def pop(self, key: int, default: VT = None) -> VT:
         try:
             key = self.enum(key)
         except ValueError:
             return default
         return super().pop(key, default)
 
-    def setdefault(self, key: T, default: V = None) -> V:
+    def setdefault(self, key: KT, default: VT = None) -> VT:
         return super().setdefault(key, default)
 
-    def setdefault(self, key: str, default: V = None) -> V:
+    def setdefault(self, key: str, default: VT = None) -> VT:
         try:
             key = self.enum[key]
         except KeyError:
             return default
         return super().setdefault(key, default)
 
-    def setdefault(self, key: int, default: V = None) -> V:
+    def setdefault(self, key: int, default: VT = None) -> VT:
         try:
             key = self.enum(key)
         except ValueError:
