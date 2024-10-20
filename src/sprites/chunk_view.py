@@ -35,7 +35,7 @@ class ChunkView(CameraSprite):
 
         self.image = pygame.Surface(BLOCKCHUNKXY, pygame.SRCALPHA)
 
-        self.debug_rect = DebugRect(self.scene, self, (255, 0, 0), 1)
+        self.debug_rect = DebugRect(self.scene, self, (255, 255, 255), 1)
         self.scene.add(self.debug_rect)
 
     def update(self, dt: float) -> None:
