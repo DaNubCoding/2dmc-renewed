@@ -93,3 +93,12 @@ def iter_square(size: int) -> Iterable[IntCoord]:
         The coordinates of the square.
     """
     yield from iter_rect(0, size - 1, 0, size - 1)
+
+__all__ = [
+    'pathof',
+    'ref_proxy',
+    'read_file',
+    'inttup',
+    'iter_rect',
+    'iter_square',
+]

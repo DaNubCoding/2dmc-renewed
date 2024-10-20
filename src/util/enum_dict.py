@@ -151,3 +151,5 @@ class IntEnumDict(Generic[KT, VT], dict[KT, VT], metaclass=multimeta):
         except ValueError:
             return default
         return super().setdefault(key, default)
+
+__all__ = ["IntEnumDict"]

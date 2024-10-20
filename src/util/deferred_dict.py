@@ -64,3 +64,5 @@ class DeferredDict(Generic[KT, VT], dict[KT, VT]):
         for key in self._deferred_remove:
             super().__delitem__(key)
         self._deferred_remove.clear()
+
+__all__ = ["DeferredDict"]

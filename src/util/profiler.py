@@ -150,3 +150,5 @@ class Profiler:
             print("All profilers finished")
 
         return ret
+
+__all__ = ["Profiler"]

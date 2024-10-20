@@ -1,4 +1,4 @@
-from typing import Protocol as _Protocol
+from typing import Protocol
 
 from pygame.typing import (
     Point as Coord,
@@ -7,8 +7,16 @@ from pygame.typing import (
     RectLike as Rect,
 )
 
-class WorldObject(_Protocol):
+class WorldObject(Protocol):
     in_scene: bool
     pos: Coord
     screen_pos: Coord
     size: IntCoord
+
+__all__ = [
+    "Coord",
+    "IntCoord",
+    "Color",
+    "Rect",
+    "WorldObject",
+]

@@ -178,3 +178,5 @@ class Vec(Vector2, metaclass=multimeta):
     def __hash__(self) -> int:
         """Return the hash of the vector."""
         return tuple(self).__hash__()
+
+__all__ = ["Vec"]
