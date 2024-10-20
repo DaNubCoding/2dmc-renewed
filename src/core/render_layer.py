@@ -1,29 +1,28 @@
+from src.util.deferred_dict import DeferredDict
 from src.core.sprite import Sprite
-from typing import Callable
+from uuid import UUID
 import pygame
 
 class RenderLayer:
-    def __init__(self, key: Callable[[Sprite], int] = None) -> None:
-        self.key = key
-        self.updating_sprites: list[Sprite] = []
-        self.rendering_sprites: list[Sprite] = []
+    def __init__(self) -> None:
+        self.updating_sprites = DeferredDict[UUID, Sprite]()
+        self.rendering_sprites = DeferredDict[UUID, Sprite]()
 
     def update(self, dt: float) -> None:
-        for sprite in self.updating_sprites:
+        for sprite in self.updating_sprites.values():
             sprite.update(dt)
+        self.updating_sprites.commit()
 
     def draw(self, screen: pygame.Surface) -> None:
-        if self.key is not None:
-            self.rendering_sprites.sort(key=self.key)
-
-        for sprite in self.rendering_sprites:
+        for sprite in self.rendering_sprites.values():
             sprite.pre_render()
             sprite.draw(screen)
+        self.rendering_sprites.commit()
 
     def add(self, sprite: Sprite) -> bool:
-        if sprite in self.updating_sprites:
+        if sprite.uuid in self.updating_sprites:
             return False
-        self.updating_sprites.append(sprite)
+        self.updating_sprites[sprite.uuid] = sprite
         sprite.on_add()
         sprite.in_scene = True
         if sprite.visible:
@@ -31,17 +30,13 @@ class RenderLayer:
         return True
 
     def add_rendering(self, sprite: Sprite) -> bool:
-        if sprite in self.rendering_sprites:
+        if sprite.uuid in self.rendering_sprites:
             return False
-        self.rendering_sprites.append(sprite)
+        self.rendering_sprites[sprite.uuid] = sprite
         return True
 
     def remove(self, sprite: Sprite) -> bool:
-        try:
-            self.updating_sprites.remove(sprite)
-            success = True
-        except ValueError:
-            success = False
+        success = bool(self.updating_sprites.pop(sprite.uuid, False))
         sprite.on_remove()
         sprite.in_scene = False
         if sprite.visible:
@@ -49,11 +44,7 @@ class RenderLayer:
         return success
 
     def remove_rendering(self, sprite: Sprite) -> bool:
-        try:
-            self.rendering_sprites.remove(sprite)
-        except ValueError:
-            return False
-        return True
+        return bool(self.rendering_sprites.pop(sprite.uuid, False))
 
     def __len__(self) -> int:
         return len(self.updating_sprites)
