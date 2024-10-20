@@ -3,4 +3,4 @@ build
 dist
 .vscode
 user_data
-debug
+/debug

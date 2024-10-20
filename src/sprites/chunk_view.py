@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.core.world.chunk import Chunk, ChunkLayer
 
-from src.sprites.visual_debug import DebugRect
+from src.sprites.debug.visual_debug import DebugRect
 from src.core.sprite import CameraSprite
 from src.core.scene import Scene
 from src.constants import *
@@ -36,7 +36,6 @@ class ChunkView(CameraSprite):
         self.image = pygame.Surface(BLOCKCHUNKXY, pygame.SRCALPHA)
 
         self.debug_rect = DebugRect(self.scene, self, (255, 255, 255), 1)
-        self.scene.add(self.debug_rect)
 
     def update(self, dt: float) -> None:
         if not self.sticky_modified: return
@@ -81,7 +80,7 @@ class ChunkView(CameraSprite):
     @CameraSprite.visible.setter
     def visible(self, value: bool) -> None:
         CameraSprite.visible.fset(self, value)
-        (self.scene.add if value else self.scene.remove)(self.debug_rect)
+        self.debug_rect.toggle(value)
 
     @property
     def on_screen(self) -> bool:

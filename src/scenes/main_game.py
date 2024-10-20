@@ -3,9 +3,9 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.core.game import Game
 
+from src.sprites.debug.debug_manager import DebugManager
 from src.core.world.chunk_manager import ChunkManager
 from src.core.world.block_manager import BlockManager
-from src.sprites.debug_menu import DebugMenu
 from src.sprites.crosshair import Crosshair
 from src.sprites.camera import Camera
 from src.core.scene import Scene
@@ -21,16 +21,13 @@ class MainScene(Scene):
         self.chunk_manager = ChunkManager(self, world_name)
         self.chunk_manager.start()
 
-        self.debug_menu = DebugMenu(self)
-        self.add(self.debug_menu)
+        self.debug_manager = DebugManager(self)
+        self.add(self.debug_manager)
 
         self.crosshair = Crosshair(self)
         self.add(self.crosshair)
 
     def update(self, dt: float) -> None:
-        if self.game.key_down == pygame.K_F3:
-            self.debug_menu.toggle()
-
         self.sprite_manager.update(dt)
 
     def draw(self, screen: pygame.Surface) -> None:
