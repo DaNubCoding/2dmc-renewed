@@ -4,12 +4,13 @@ from src.util.typing import *
 from pathlib import Path
 from math import floor
 import weakref
+import pygame
 import sys
 import os
 
-T = TypeVar('T')
+T = TypeVar("T")
 BUNDLE_DIR = getattr(
-    sys, '_MEIPASS',
+    sys, "_MEIPASS",
     Path(os.path.abspath(os.path.dirname(__file__))).parent
 )
 
@@ -30,7 +31,7 @@ def pathof(file: str) -> str:
 # IntelliSense for attribute access on the proxy object, so we will pretend it
 # is just T :P
 def ref_proxy(obj: T) -> T:
-    """Create a weak reference proxy to an object if it isn't already one.
+    """Create a weak reference proxy to an object if it isn"t already one.
 
     Args:
         obj: The object to create a weak reference proxy to.
@@ -94,11 +95,18 @@ def iter_square(size: int) -> Iterable[IntCoord]:
     """
     yield from iter_rect(0, size - 1, 0, size - 1)
 
+def invert_surface(surface: pygame.Surface) -> pygame.Surface:
+    inverted = pygame.Surface(surface.get_size())
+    inverted.fill((255, 255, 255))
+    inverted.blit(surface, (0, 0), special_flags=pygame.BLEND_SUB)
+    return inverted
+
 __all__ = [
-    'pathof',
-    'ref_proxy',
-    'read_file',
-    'inttup',
-    'iter_rect',
-    'iter_square',
+    "pathof",
+    "ref_proxy",
+    "read_file",
+    "inttup",
+    "iter_rect",
+    "iter_square",
+    "invert_surface",
 ]
