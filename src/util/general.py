@@ -95,7 +95,15 @@ def iter_square(size: int) -> Iterable[IntCoord]:
     """
     yield from iter_rect(0, size - 1, 0, size - 1)
 
-def invert_surface(surface: pygame.Surface) -> pygame.Surface:
+def invert_surface_colors(surface: pygame.Surface) -> pygame.Surface:
+    """Invert the colors of a surface.
+
+    Args:
+        surface: The surface to invert.
+
+    Returns:
+        The inverted surface.
+    """
     inverted = pygame.Surface(surface.get_size())
     inverted.fill((255, 255, 255))
     inverted.blit(surface, (0, 0), special_flags=pygame.BLEND_SUB)
@@ -108,5 +116,5 @@ __all__ = [
     "inttup",
     "iter_rect",
     "iter_square",
-    "invert_surface",
+    "invert_surface_colors",
 ]

@@ -20,8 +20,8 @@ class Crosshair(Sprite):
         try:
             hor_line = screen.subsurface((self.screen_pos - Vec(16, 2), (32, 4)))
             ver_line = screen.subsurface((self.screen_pos - Vec(2, 16), (4, 32)))
-            inv_hor_line = invert_surface(hor_line)
-            inv_ver_line = invert_surface(ver_line)
+            inv_hor_line = invert_surface_colors(hor_line)
+            inv_ver_line = invert_surface_colors(ver_line)
             screen.blit(inv_hor_line, self.screen_pos - Vec(16, 2))
             screen.blit(inv_ver_line, self.screen_pos - Vec(2, 16))
         except ValueError:
