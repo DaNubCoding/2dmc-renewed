@@ -109,6 +109,18 @@ def invert_surface_colors(surface: pygame.Surface) -> pygame.Surface:
     inverted.blit(surface, (0, 0), special_flags=pygame.BLEND_SUB)
     return inverted
 
+def smart_invert_surface_colors(surface: pygame.Surface) -> pygame.Surface:
+    inverted = invert_surface_colors(surface)
+    pygame.transform.threshold(
+        dest_surface=inverted,
+        surface=inverted,
+        search_color=(128, 128, 128),
+        threshold=(30, 30, 30),
+        set_color=(220, 220, 220),
+        inverse_set=True
+    )
+    return inverted
+
 __all__ = [
     "pathof",
     "ref_proxy",
@@ -117,4 +129,5 @@ __all__ = [
     "iter_rect",
     "iter_square",
     "invert_surface_colors",
+    "smart_invert_surface_colors"
 ]
