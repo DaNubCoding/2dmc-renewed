@@ -9,9 +9,9 @@ class Layer(Enum):
     MG = auto()
     PLAYER = auto()
     FG = auto()
+    CROSSHAIR = auto()
     DEBUG = auto()
     HUD = auto()
-    CROSSHAIR = auto()
 
 BLOCK = 64 # pixels
 CHUNK = 8 # blocks
