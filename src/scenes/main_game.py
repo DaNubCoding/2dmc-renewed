@@ -9,6 +9,7 @@ from src.core.world.block_manager import BlockManager
 from src.sprites.crosshair import Crosshair
 from src.sprites.camera import Camera
 from src.core.scene import Scene
+from src.constants import *
 import pygame
 
 class MainScene(Scene):
@@ -31,7 +32,7 @@ class MainScene(Scene):
         self.sprite_manager.update(dt)
 
     def draw(self, screen: pygame.Surface) -> None:
-        screen.fill((120, 167, 255))
+        screen.fill(SKY_COLOR)
         self.sprite_manager.draw(screen)
 
     def quit(self) -> None:

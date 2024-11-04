@@ -25,6 +25,8 @@ CHUNK_CHECK_MAX_FREQ = 20 # per second
 CHUNK_LOAD_MAX_FREQ = 128 # per second
 AUTOSAVE_INTERVAL = 15 # seconds
 
+SKY_COLOR = (120, 167, 255)
+
 CROSSHAIR_W = 4 # pixels
 CROSSHAIR_L = 32 # pixels
 
